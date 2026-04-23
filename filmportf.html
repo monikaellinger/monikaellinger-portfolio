@@ -1,0 +1,2279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<title>Monika Ellingerová — Director · Developer · Devout Cinephile</title>
+<meta name="description" content="Portfolio of Monika Ellingerová — UX/UI, AI, and filmmaking. A movie poster for a person.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo+Black&family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Inter:wght@300..800&family=JetBrains+Mono:wght@400..700&display=swap" rel="stylesheet">
+
+<style>
+/* =============================================================
+   PALETTE — cherry & hot pink
+   ============================================================= */
+:root{
+  --cherry:      #c4161c;
+  --cherry-deep: #8a0f13;
+  --cherry-dark: #5a0a0d;
+  --pink:        #ff4f9a;
+  --pink-hot:    #ff2a84;
+  --rose:        #ffb3d0;
+  --rose-pale:   #ffd7e7;
+  --cream:       #fff5f0;
+  --paper:       #fff0e8;
+  --ink:         #1a0608;
+  --shadow:      0 30px 80px -30px rgba(90,10,13,.55);
+
+  --f-display: 'Bodoni Moda', 'Bodoni 72', 'Didot', serif;
+  --f-head:    'Fraunces', 'Times New Roman', serif;
+  --f-body:    'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --f-mono:    'JetBrains Mono', ui-monospace, monospace;
+  --f-title:   'Anton', 'Arial Narrow', 'Helvetica Neue Condensed', sans-serif;
+  --f-block:   'Archivo Black', 'Arial Black', sans-serif;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  font-family:var(--f-body);
+  background:var(--cream);
+  color:var(--ink);
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  line-height:1.55;
+  cursor:none;
+}
+@media (pointer: coarse){ body{cursor:auto;} }
+img{display:block;max-width:100%;height:auto}
+a{color:inherit;text-decoration:none}
+button{font:inherit;cursor:pointer;border:0;background:none;color:inherit}
+@media (pointer: fine){ button, a{cursor:none;} }
+
+/* =============================================================
+   FILM GRAIN
+   ============================================================= */
+.grain{
+  position:fixed;inset:0;pointer-events:none;z-index:999;
+  opacity:.08;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.92' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.1  0 0 0 0 0.02  0 0 0 0 0.03  0 0 0 .55 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+/* =============================================================
+   CUSTOM CURSOR (desktop only)
+   ============================================================= */
+.cursor, .cursor-trail{
+  position:fixed;top:0;left:0;pointer-events:none;z-index:9999;
+  border-radius:50%;
+  transform:translate(-50%,-50%);
+  transition:width .2s ease, height .2s ease, background .2s ease;
+}
+.cursor{
+  width:14px;height:14px;
+  background:var(--cherry);
+  mix-blend-mode:multiply;
+}
+.cursor-trail{
+  width:46px;height:46px;
+  border:1.5px solid var(--pink-hot);
+  transition:transform .12s ease-out, width .25s ease, height .25s ease, border-color .25s ease;
+}
+.cursor.hover{ width:0;height:0; }
+.cursor-trail.hover{
+  width:80px;height:80px;
+  background:radial-gradient(circle, rgba(255,79,154,.25), transparent 70%);
+  border-color:transparent;
+}
+@media (pointer: coarse){ .cursor, .cursor-trail{display:none} }
+
+/* =============================================================
+   SCROLL PROGRESS — film strip
+   ============================================================= */
+.progress{
+  position:fixed;top:0;left:0;right:0;height:8px;z-index:200;
+  background:
+    repeating-linear-gradient(90deg,
+      var(--cherry-dark) 0 10px,
+      transparent 10px 18px,
+      var(--cherry-dark) 18px 22px,
+      transparent 22px 30px);
+  background-color:var(--ink);
+}
+.progress-bar{
+  position:absolute;top:0;left:0;height:100%;
+  background:linear-gradient(90deg, var(--pink-hot), var(--pink), var(--cherry), var(--cherry-deep));
+  width:0%;
+  box-shadow:0 0 20px var(--pink);
+  transition:width .08s linear;
+}
+
+/* =============================================================
+   NAV
+   ============================================================= */
+.nav{
+  position:fixed;top:8px;left:0;right:0;z-index:100;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:16px clamp(18px, 4vw, 48px);
+}
+.nav-mark{
+  font-family:var(--f-mono);
+  font-weight:700;
+  font-size:.72rem;
+  letter-spacing:.28em;
+  text-transform:uppercase;
+  color:var(--ink);
+}
+.nav-mark span{color:var(--cherry)}
+.nav-list{
+  display:flex;gap:clamp(14px,2.5vw,32px);
+  list-style:none;
+  font-family:var(--f-mono);
+  font-size:.7rem;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  font-weight:500;
+}
+.nav-list a{
+  position:relative;padding:6px 2px;
+  transition:color .3s ease;
+}
+.nav-list a::after{
+  content:'';position:absolute;left:0;bottom:0;
+  height:1.5px;width:0;
+  background:var(--cherry);
+  transition:width .35s cubic-bezier(.2,.8,.2,1);
+}
+.nav-list a:hover{color:var(--cherry)}
+.nav-list a:hover::after{width:100%}
+@media (max-width:720px){
+  .nav-list{display:none}
+}
+
+/* =============================================================
+   CLAPPERBOARD (fixed, interactive)
+   ============================================================= */
+.clap{
+  position:fixed;right:18px;bottom:18px;z-index:120;
+  width:88px;height:88px;
+  cursor:pointer;
+  filter:drop-shadow(0 12px 20px rgba(90,10,13,.35));
+  transition:transform .2s ease;
+}
+.clap:hover{ transform:scale(1.05) rotate(-4deg); }
+.clap.clapped .clap-top{ animation: clapSlam .55s cubic-bezier(.4,1.4,.5,1); }
+@keyframes clapSlam{
+  0%{transform:rotate(-28deg)}
+  40%{transform:rotate(4deg)}
+  65%{transform:rotate(-3deg)}
+  100%{transform:rotate(0)}
+}
+.clap svg{width:100%;height:100%;overflow:visible}
+.clap-take{
+  position:absolute;top:-10px;left:-14px;
+  background:var(--pink-hot);
+  color:var(--cream);
+  font-family:var(--f-mono);font-weight:700;
+  font-size:.68rem;padding:4px 9px;
+  border-radius:20px;
+  letter-spacing:.1em;
+  box-shadow:0 4px 12px rgba(255,42,132,.45);
+  transform-origin:center;
+}
+.clap.clapped .clap-take{ animation: takePop .55s cubic-bezier(.4,1.4,.5,1); }
+@keyframes takePop{
+  0%{transform:scale(1)}
+  40%{transform:scale(1.35)}
+  100%{transform:scale(1)}
+}
+.clap-hint{
+  position:absolute;right:105%;top:50%;
+  transform:translateY(-50%) translateX(8px);
+  white-space:nowrap;
+  font-family:var(--f-mono);
+  font-size:.65rem;letter-spacing:.2em;
+  color:var(--cherry-deep);
+  opacity:0;transition:all .3s ease;
+  pointer-events:none;
+  background:var(--cream);
+  padding:4px 8px;border-radius:3px;
+  border:1px solid var(--cherry);
+}
+.clap:hover .clap-hint{opacity:1;transform:translateY(-50%) translateX(0)}
+@media (max-width:600px){ .clap{width:64px;height:64px;right:10px;bottom:10px} .clap-hint{display:none} }
+
+/* =============================================================
+   HERO — MOVIE POSTER (graphic design heavy, type-led)
+   ============================================================= */
+.hero{
+  position:relative;
+  min-height:100vh;
+  min-height:100svh;
+  padding: clamp(90px, 12vh, 140px) 0 clamp(40px, 6vh, 80px);
+  background: var(--cherry);
+  color:var(--cream);
+  overflow:hidden;
+  isolation:isolate;
+}
+/* halftone */
+.hero::before{
+  content:'';position:absolute;inset:0;
+  background-image:radial-gradient(circle, rgba(255,255,255,.09) 1px, transparent 1.5px);
+  background-size:10px 10px;
+  opacity:.6;
+  pointer-events:none;
+  mix-blend-mode:screen;
+}
+/* diagonal stripe */
+.hero::after{
+  content:'';position:absolute;top:-20%;right:-10%;
+  width:55%;height:140%;
+  background:linear-gradient(180deg, var(--cherry-deep), var(--cherry-dark));
+  transform:skewX(-18deg);
+  opacity:.55;
+  pointer-events:none;
+  z-index:0;
+}
+
+/* inner wrapper with edge padding */
+.hero-inner{
+  position:relative;
+  width:100%;
+  max-width:1440px;
+  margin:0 auto;
+  padding: 0 clamp(60px, 6vw, 96px);
+  z-index:2;
+}
+
+/* thin top framing bar */
+.hero-top-bar{
+  position:absolute;
+  top:80px;left:clamp(60px, 6vw, 96px);right:clamp(60px, 6vw, 96px);
+  display:flex;justify-content:space-between;align-items:center;
+  padding-bottom:10px;
+  border-bottom:1px solid rgba(255,245,240,.4);
+  font-family:var(--f-mono);
+  font-size:.62rem;letter-spacing:.3em;text-transform:uppercase;
+  color:var(--rose-pale);
+}
+.hero-top-bar .hero-corner-r{color:var(--cream);font-weight:700}
+
+/* VERTICAL SPINE label — left edge */
+.hero-spine{
+  position:absolute;
+  left:12px;top:50%;
+  transform:translateY(-50%) rotate(-90deg);
+  transform-origin:left center;
+  font-family:var(--f-mono);
+  font-size:.66rem;letter-spacing:.4em;text-transform:uppercase;
+  color:var(--rose);
+  white-space:nowrap;
+  z-index:3;
+}
+.hero-spine span{color:var(--cream)}
+
+/* VERTICAL PAGE NUMBER — right edge */
+.hero-pg{
+  position:absolute;
+  right:18px;top:50%;
+  transform:translateY(-50%);
+  text-align:center;
+  font-family:var(--f-mono);
+  color:var(--rose-pale);
+  z-index:3;
+  display:flex;flex-direction:column;gap:6px;align-items:center;
+}
+.hero-pg .pg-num{
+  font-family:var(--f-title);
+  font-size:3rem;line-height:.9;
+  color:var(--cream);
+  letter-spacing:-.02em;
+}
+.hero-pg .pg-lab{
+  font-size:.55rem;letter-spacing:.4em;text-transform:uppercase;
+  writing-mode:vertical-rl;
+  transform:rotate(180deg);
+}
+@media (max-width: 1100px){ .hero-spine, .hero-pg{display:none} }
+
+/* GRID layout: photo + title side-by-side */
+.poster{
+  position:relative;
+  display:grid;
+  grid-template-columns: minmax(260px, 38%) 1fr;
+  grid-template-rows: auto auto;
+  gap: clamp(24px, 3vw, 48px);
+  align-items:center;
+  margin-top: clamp(40px, 6vh, 60px);
+}
+
+/* PHOTO column */
+.poster-photo{
+  position:relative;
+  grid-column:1;grid-row:1;
+  aspect-ratio: 4/5;
+  overflow:hidden;
+  background: var(--cherry-dark);
+  box-shadow:
+    -18px 18px 0 0 var(--ink),
+    0 40px 80px -20px rgba(0,0,0,.5);
+}
+.poster-photo img{
+  width:100%;height:100%;object-fit:cover;
+  /* cherry duotone wash */
+  filter: contrast(1.15) saturate(1.1);
+  transition:transform .8s cubic-bezier(.2,.8,.2,1);
+}
+.poster-photo:hover img{ transform:scale(1.04); }
+/* pink wash for duotone integration */
+.poster-photo::before{
+  content:'';position:absolute;inset:0;z-index:2;
+  background:
+    linear-gradient(175deg, rgba(255,42,132,.25) 0%, transparent 35%, transparent 65%, rgba(90,10,13,.6) 100%);
+  pointer-events:none;
+  mix-blend-mode:multiply;
+}
+.poster-photo::after{
+  content:'';position:absolute;inset:0;z-index:3;
+  background:
+    radial-gradient(ellipse 70% 50% at 50% 30%, rgba(255,180,210,.18) 0%, transparent 60%);
+  pointer-events:none;
+  mix-blend-mode:screen;
+}
+/* white tick marks top-left of photo */
+.photo-ticks{
+  position:absolute;top:14px;left:14px;z-index:4;
+  display:flex;gap:4px;
+}
+.photo-ticks i{display:block;width:14px;height:2px;background:var(--cream)}
+.photo-ticks i:nth-child(2){width:4px}
+.photo-ticks i:nth-child(3){width:20px}
+/* bottom label on photo */
+.photo-label{
+  position:absolute;bottom:10px;left:12px;right:12px;z-index:4;
+  display:flex;justify-content:space-between;
+  font-family:var(--f-mono);
+  font-size:.58rem;letter-spacing:.25em;
+  color:var(--cream);text-transform:uppercase;
+  opacity:.85;
+}
+
+/* TITLE column */
+.poster-title-col{
+  grid-column:2;grid-row:1;
+  position:relative;
+  display:flex;flex-direction:column;
+  justify-content:center;
+  gap:clamp(12px, 2vw, 22px);
+}
+
+.eyebrow{
+  font-family:var(--f-mono);
+  font-size:.7rem;letter-spacing:.4em;
+  text-transform:uppercase;
+  color:var(--rose-pale);
+  display:flex;align-items:center;gap:14px;
+}
+.eyebrow .line{flex:1;height:1px;background:rgba(255,215,231,.5);max-width:60px}
+
+.title{
+  font-family:var(--f-title);
+  font-weight:400; /* Anton is 400 only */
+  text-transform:uppercase;
+  font-size:clamp(3.2rem, 11.5vw, 11rem);
+  line-height:.84;
+  letter-spacing:-.005em;
+  color:var(--cream);
+  margin:0;
+  position:relative;
+}
+.title .ln{
+  display:block;
+  position:relative;
+}
+.title .ln-1{
+  color:var(--cream);
+}
+.title .ln-2{
+  font-size:.92em;
+  /* layered stack look */
+  color:var(--cream);
+  text-shadow:
+    1px 1px 0 var(--cherry-deep),
+    3px 3px 0 var(--cherry-deep),
+    5px 5px 0 var(--cherry-dark),
+    7px 7px 0 var(--cherry-dark);
+}
+.title .accent{
+  color: var(--rose-pale);
+}
+
+/* roles strip BELOW the title — now clearly separated, not overlapping */
+.roles{
+  margin-top: clamp(20px, 3vh, 34px);
+  padding-top:14px;
+  border-top:1px solid rgba(255,215,231,.5);
+  display:flex;flex-wrap:wrap;gap:10px 18px;
+  font-family:var(--f-mono);
+  font-size:.72rem;letter-spacing:.32em;
+  text-transform:uppercase;
+  color:var(--cream);
+}
+.roles span{position:relative}
+.roles span + span::before{
+  content:'✦';
+  color:var(--rose-pale);
+  margin-right:18px;opacity:.7;
+}
+
+/* DESCRIPTION row (runs full width below the title+photo) */
+.poster-row-2{
+  grid-column:1 / -1;grid-row:2;
+  display:grid;
+  grid-template-columns: auto 1fr auto;
+  gap: clamp(18px, 2.5vw, 40px);
+  align-items:end;
+  margin-top: clamp(30px, 5vh, 60px);
+  padding-top: 20px;
+  border-top:2px solid var(--cream);
+}
+
+/* LAUREL + stars on the left */
+.laurel-block{
+  display:flex;align-items:center;gap:16px;
+}
+.laurel{
+  width:100px;height:100px;
+  position:relative;
+  display:flex;align-items:center;justify-content:center;
+  text-align:center;
+  color:var(--cream);
+  font-family:var(--f-mono);
+  font-size:.55rem;letter-spacing:.22em;
+  font-weight:700;line-height:1.2;
+  transition:transform .4s ease;
+}
+.laurel:hover{transform:scale(1.08) rotate(-4deg)}
+.laurel svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.laurel .laurel-text{position:relative;z-index:1}
+.laurel .year{display:block;font-family:var(--f-title);font-size:1.1rem;margin-top:4px}
+
+.star-block{
+  display:flex;flex-direction:column;gap:4px;
+}
+.stars{
+  display:flex;gap:3px;font-size:1rem;color:var(--cream);
+}
+.stars button{
+  color:rgba(255,245,240,.35);
+  transition:color .15s ease, transform .2s ease;
+  font-size:1.1rem;
+}
+.stars button.on{color:var(--cream);text-shadow:0 0 12px rgba(255,255,255,.8)}
+.stars button:hover{transform:scale(1.2)}
+.stars-label{
+  font-family:var(--f-mono);
+  font-size:.58rem;letter-spacing:.24em;
+  color:var(--rose-pale);
+  text-transform:uppercase;
+}
+
+/* NOW PLAYING text block (center) */
+.now-block{
+  font-family:var(--f-mono);
+  font-size:.68rem;letter-spacing:.22em;
+  color:var(--rose-pale);
+  line-height:1.9;
+  text-transform:uppercase;
+  max-width:360px;
+}
+.now-block strong{color:var(--cream);font-weight:700;letter-spacing:.28em}
+.now-block .big{
+  display:block;
+  font-family:var(--f-title);
+  font-size:clamp(1.2rem, 2vw, 1.8rem);
+  letter-spacing:.02em;
+  color:var(--cream);
+  line-height:1;
+  margin-bottom:6px;
+}
+
+/* Green-light CTA (right) */
+.greenlight{
+  display:inline-flex;align-items:center;gap:12px;
+  background:var(--cream);
+  color:var(--cherry-deep);
+  font-family:var(--f-mono);font-weight:700;
+  font-size:.72rem;letter-spacing:.28em;
+  text-transform:uppercase;
+  padding:16px 24px;
+  position:relative;
+  box-shadow: 0 10px 30px -8px rgba(0,0,0,.4);
+  overflow:hidden;
+  transition:transform .3s ease, box-shadow .3s ease, color .3s ease;
+  justify-self:end;
+}
+.greenlight::before{
+  content:'';position:absolute;inset:0;
+  background:var(--ink);
+  transform:translateX(-100%);
+  transition:transform .45s cubic-bezier(.2,.8,.2,1);
+  z-index:0;
+}
+.greenlight > *{position:relative;z-index:1}
+.greenlight:hover{color:var(--cream);transform:translateY(-3px);box-shadow:0 18px 40px -10px rgba(0,0,0,.5)}
+.greenlight:hover::before{transform:translateX(0)}
+.greenlight .dot{
+  width:10px;height:10px;border-radius:50%;
+  background:#2ecc71;
+  box-shadow:0 0 0 0 rgba(46,204,113,.7);
+  animation: pulse 1.6s infinite;
+}
+.greenlight .arr{display:inline-block;transition:transform .3s ease}
+.greenlight:hover .arr{transform:translateX(4px)}
+@keyframes pulse{
+  0%{box-shadow:0 0 0 0 rgba(46,204,113,.7)}
+  70%{box-shadow:0 0 0 14px rgba(46,204,113,0)}
+  100%{box-shadow:0 0 0 0 rgba(46,204,113,0)}
+}
+
+/* ROTATING PRESS QUOTE — absolutely positioned, top-right of hero */
+.press-quote{
+  position:absolute;
+  top: clamp(130px, 18vh, 170px);
+  right: clamp(60px, 6vw, 96px);
+  max-width:240px;
+  text-align:right;
+  z-index:3;
+}
+@media (max-width:1100px){
+  .press-quote{position:relative;top:auto;right:auto;max-width:none;text-align:left;margin-top:10px}
+}
+.quote-stack{position:relative;min-height:64px}
+.quote-stack q{
+  position:absolute;top:0;left:0;right:0;
+  font-family:var(--f-head);
+  font-style:italic;font-weight:400;
+  font-size:.95rem;line-height:1.35;
+  color:var(--cream);
+  opacity:0;transform:translateY(10px);
+  transition:opacity .7s ease, transform .7s ease;
+}
+.quote-stack q.active{opacity:1;transform:translateY(0)}
+.quote-stack q::before{content:'“'}
+.quote-stack q::after{content:'”'}
+.quote-source{
+  font-family:var(--f-mono);font-size:.56rem;
+  letter-spacing:.3em;color:var(--rose);
+  text-transform:uppercase;margin-top:8px;
+}
+
+/* BARCODE at very bottom of hero */
+.barcode{
+  position:absolute;
+  bottom:22px;right:clamp(60px, 6vw, 96px);
+  display:flex;align-items:center;gap:10px;z-index:3;
+}
+.barcode-bars{
+  display:flex;gap:2px;align-items:center;
+}
+.barcode-bars i{
+  display:block;width:2px;height:32px;background:var(--cream);
+}
+.barcode-bars i:nth-child(2n){height:26px}
+.barcode-bars i:nth-child(3n){width:1px}
+.barcode-bars i:nth-child(5n){width:3px}
+.barcode-bars i:nth-child(7n){height:30px}
+.barcode-num{
+  font-family:var(--f-mono);
+  font-size:.6rem;letter-spacing:.22em;
+  color:var(--rose-pale);
+  text-transform:uppercase;
+}
+
+/* Mobile hero layout */
+@media (max-width:900px){
+  .hero-top-bar{display:none}
+  .poster{
+    grid-template-columns:1fr;
+    gap:28px;
+  }
+  .poster-photo{grid-column:1;grid-row:1;aspect-ratio:4/5;max-width:78%;margin:0 auto}
+  .poster-title-col{grid-column:1;grid-row:2;text-align:center}
+  .eyebrow{justify-content:center}
+  .roles{justify-content:center}
+  .poster-row-2{
+    grid-template-columns:1fr;
+    gap:22px;
+    justify-items:center;text-align:center;
+  }
+  .greenlight{justify-self:center}
+  .barcode{position:relative;bottom:auto;right:auto;justify-content:center;margin-top:30px}
+  .press-quote{text-align:center}
+  .quote-stack q{text-align:center}
+}
+
+/* =============================================================
+   SECTION BASE
+   ============================================================= */
+section{
+  padding: clamp(60px, 10vw, 140px) clamp(20px, 4vw, 72px);
+  position:relative;
+}
+.section-head{
+  display:flex;align-items:flex-end;justify-content:space-between;
+  margin-bottom:clamp(32px, 5vw, 64px);
+  gap:20px;flex-wrap:wrap;
+  border-bottom:2px solid var(--cherry);
+  padding-bottom:20px;
+  position:relative;
+}
+.section-head::before{
+  /* graphic corner bracket */
+  content:'';
+  position:absolute;top:-6px;left:0;
+  width:24px;height:24px;
+  border-top:3px solid var(--cherry);
+  border-left:3px solid var(--cherry);
+}
+.section-head::after{
+  content:'';
+  position:absolute;bottom:-2px;right:0;
+  width:24px;height:24px;
+  border-bottom:3px solid var(--cherry);
+  border-right:3px solid var(--cherry);
+}
+.section-num{
+  font-family:var(--f-mono);
+  font-size:.7rem;letter-spacing:.32em;
+  color:var(--cherry);
+  font-weight:700;
+  display:inline-flex;align-items:center;gap:10px;
+}
+.section-num::before{
+  content:'';display:inline-block;
+  width:14px;height:2px;background:var(--cherry);
+}
+.section-title{
+  font-family:var(--f-head);
+  font-weight:500;
+  font-size:clamp(2rem, 5.5vw, 4.4rem);
+  letter-spacing:-.02em;
+  line-height:.95;
+  color:var(--ink);
+}
+.section-title em{
+  font-family:var(--f-title);
+  font-style:normal;
+  text-transform:uppercase;
+  color:var(--cherry);
+  font-weight:400;
+  letter-spacing:-.01em;
+}
+.section-kicker{
+  font-family:var(--f-mono);
+  font-size:.68rem;letter-spacing:.28em;
+  color:var(--cherry);
+  text-transform:uppercase;
+  font-weight:700;
+  display:inline-flex;align-items:center;gap:10px;
+  padding:6px 10px;
+  border:1px solid var(--cherry);
+}
+
+.reveal{opacity:0;transform:translateY(40px);transition:opacity .9s ease, transform .9s ease}
+.reveal.in{opacity:1;transform:translateY(0)}
+
+/* =============================================================
+   ABOUT — Cast & Crew
+   ============================================================= */
+#about{
+  background:var(--cream);
+}
+.castcrew{
+  display:grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap:clamp(40px, 6vw, 100px);
+  align-items:start;
+}
+.castcrew-lead{
+  font-family:var(--f-head);
+  font-size:clamp(1.4rem, 2.6vw, 2rem);
+  line-height:1.35;
+  font-weight:300;
+  color:var(--ink);
+}
+.castcrew-lead span{
+  background:linear-gradient(120deg, var(--pink-hot), var(--cherry));
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+  font-style:italic;
+  font-weight:500;
+}
+.castcrew-body{
+  font-size:1rem;
+  line-height:1.7;
+  color:var(--ink);
+  margin-top:24px;
+  max-width:52ch;
+}
+.castcrew-body p + p{margin-top:1em}
+
+.credits{
+  background:var(--cherry);
+  color:var(--cream);
+  padding:clamp(24px, 3vw, 40px);
+  border-radius:2px;
+  font-family:var(--f-mono);
+  font-size:.82rem;
+  line-height:2;
+  position:relative;
+  box-shadow: var(--shadow);
+}
+.credits::before{
+  content:'BILLING';
+  position:absolute;top:-10px;left:24px;
+  background:var(--cream);color:var(--cherry-deep);
+  font-weight:700;font-size:.6rem;letter-spacing:.3em;
+  padding:4px 10px;
+}
+.credits-row{
+  display:grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap:20px;
+  padding:6px 0;
+  border-bottom:1px dashed rgba(255,245,240,.25);
+}
+.credits-row:last-child{border-bottom:0}
+.credits-role{
+  color:var(--rose);
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  font-size:.68rem;
+}
+.credits-name{
+  font-family:var(--f-head);
+  font-style:italic;
+  font-size:.95rem;
+  letter-spacing:0;
+  text-transform:none;
+}
+
+@media (max-width:860px){
+  .castcrew{grid-template-columns:1fr}
+}
+
+/* =============================================================
+   WORK — DIRECTOR'S CUT / THEATRICAL CUT
+   ============================================================= */
+#work{
+  background:var(--paper);
+}
+.cuts{
+  display:inline-flex;
+  background:var(--cream);
+  border:2px solid var(--cherry);
+  border-radius:100px;
+  padding:4px;
+  margin-bottom:40px;
+  position:relative;
+  box-shadow: 0 8px 24px -10px rgba(196,22,28,.3);
+}
+.cut-btn{
+  padding:12px 22px;
+  font-family:var(--f-head);
+  font-weight:600;
+  font-size:.75rem;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:var(--cherry);
+  border-radius:100px;
+  position:relative;z-index:1;
+  transition:color .3s ease;
+  white-space:nowrap;
+}
+.cut-btn.active{color:var(--cream)}
+.cut-indicator{
+  position:absolute;top:4px;bottom:4px;
+  background:linear-gradient(90deg, var(--cherry), var(--pink-hot));
+  border-radius:100px;
+  transition:left .4s cubic-bezier(.4,1.2,.4,1), width .4s cubic-bezier(.4,1.2,.4,1);
+  z-index:0;
+  box-shadow: 0 4px 14px -2px rgba(255,42,132,.5);
+}
+
+.work-grid{
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap:clamp(18px, 2.5vw, 28px);
+}
+.work-group{display:contents}
+.work-group.hidden{display:none}
+
+.work-card{
+  position:relative;
+  aspect-ratio: 3/4;
+  border-radius:3px;
+  overflow:hidden;
+  background:var(--ink);
+  color:var(--cream);
+  transition:transform .4s cubic-bezier(.2,.8,.2,1), box-shadow .4s;
+  box-shadow: 0 10px 30px -10px rgba(90,10,13,.3);
+  perspective: 1000px;
+}
+.work-card:hover{
+  transform:translateY(-6px);
+  box-shadow: 0 25px 50px -15px rgba(255,42,132,.4);
+}
+.work-card-inner{
+  position:absolute;inset:0;
+  transform-style:preserve-3d;
+  transition: transform .7s cubic-bezier(.4,1,.4,1);
+}
+.work-card.flipped .work-card-inner{ transform:rotateY(180deg); }
+
+.work-face{
+  position:absolute;inset:0;
+  backface-visibility:hidden;
+  -webkit-backface-visibility:hidden;
+  display:flex;flex-direction:column;justify-content:flex-end;
+  padding:24px;
+  overflow:hidden;
+}
+.work-front{
+  background:linear-gradient(155deg, var(--cherry), var(--pink-hot) 70%, var(--pink));
+}
+.work-front.nocase{
+  background:linear-gradient(155deg, var(--cherry-deep), var(--cherry) 60%, var(--pink-hot));
+}
+.work-front::before{
+  content:'';position:absolute;inset:0;
+  background-image:radial-gradient(circle, rgba(255,255,255,.12) 1px, transparent 1.5px);
+  background-size:10px 10px;
+  opacity:.5;
+  pointer-events:none;
+}
+.work-front::after{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 60% 40% at 50% 30%, rgba(255,255,255,.22) 0%, transparent 70%);
+  pointer-events:none;
+  mix-blend-mode:screen;
+}
+
+.work-genre{
+  position:absolute;top:18px;left:18px;
+  font-family:var(--f-mono);
+  font-size:.6rem;letter-spacing:.3em;
+  background:rgba(255,245,240,.9);
+  color:var(--cherry-deep);
+  padding:5px 10px;
+  font-weight:700;
+  z-index:2;
+}
+.work-runtime{
+  position:absolute;top:18px;right:18px;
+  font-family:var(--f-mono);
+  font-size:.6rem;letter-spacing:.2em;
+  color:var(--cream);
+  opacity:.75;
+  z-index:2;
+}
+.work-title{
+  font-family:var(--f-display);
+  font-style:italic;
+  font-weight:700;
+  font-size:clamp(1.5rem, 2.4vw, 2.1rem);
+  line-height:1;
+  margin-bottom:10px;
+  position:relative;z-index:2;
+  text-shadow:0 2px 16px rgba(90,10,13,.5);
+}
+.work-subtitle{
+  font-family:var(--f-mono);
+  font-size:.7rem;letter-spacing:.22em;
+  text-transform:uppercase;
+  opacity:.9;
+  position:relative;z-index:2;
+}
+.work-back{
+  background:var(--ink);
+  color:var(--cream);
+  transform:rotateY(180deg);
+  padding:28px;
+  justify-content:space-between;
+}
+.work-back-title{
+  font-family:var(--f-head);
+  font-style:italic;
+  font-size:1.3rem;
+  margin-bottom:14px;
+  color:var(--pink);
+}
+.work-back-body{
+  font-size:.88rem;line-height:1.55;
+  color:var(--rose-pale);
+}
+.work-back-tech{
+  display:flex;flex-wrap:wrap;gap:6px;
+  margin-top:16px;
+}
+.work-back-tech span{
+  font-family:var(--f-mono);font-size:.62rem;
+  letter-spacing:.15em;text-transform:uppercase;
+  border:1px solid var(--cherry);
+  color:var(--rose);
+  padding:4px 8px;
+}
+.work-flip-hint{
+  position:absolute;bottom:12px;right:16px;
+  font-family:var(--f-mono);font-size:.58rem;
+  letter-spacing:.24em;text-transform:uppercase;
+  opacity:.75;z-index:3;
+  color:var(--cream);
+}
+.work-back .work-flip-hint{color:var(--pink)}
+
+/* =============================================================
+   STILLS — film strip
+   ============================================================= */
+#stills{
+  background:var(--ink);
+  color:var(--cream);
+}
+#stills .section-title{color:var(--cream)}
+#stills .section-title em{color:var(--pink)}
+#stills .section-num{color:var(--pink)}
+#stills .section-head{border-color:var(--cherry)}
+
+.stills-band{
+  position:relative;
+  margin:0 calc(-1 * clamp(20px, 4vw, 72px));
+  padding: 20px 0;
+  background:
+    repeating-linear-gradient(90deg,
+      #0a0203 0 18px,
+      transparent 18px 30px,
+      #0a0203 30px 36px,
+      transparent 36px 50px);
+  background-color:var(--ink);
+}
+.stills-scroll{
+  display:flex;
+  gap:16px;
+  padding: 16px clamp(20px, 4vw, 72px);
+  overflow-x:auto;
+  scroll-snap-type:x mandatory;
+  scrollbar-width:none;
+  -webkit-overflow-scrolling:touch;
+}
+.stills-scroll::-webkit-scrollbar{display:none}
+.still{
+  flex:0 0 auto;
+  width:clamp(240px, 32vw, 380px);
+  aspect-ratio: 3/4;
+  scroll-snap-align:start;
+  position:relative;
+  overflow:hidden;
+  border-radius:2px;
+  transition:transform .5s ease;
+}
+.still:hover{transform:translateY(-8px) scale(1.02)}
+.still-bg{
+  position:absolute;inset:0;
+  background:linear-gradient(135deg, var(--cherry-deep), var(--pink-hot));
+}
+.still img{
+  position:absolute;inset:0;
+  width:100%;height:100%;object-fit:cover;
+  filter: saturate(1.1) contrast(1.08);
+  transition: transform .8s ease;
+}
+.still:hover img{transform:scale(1.08)}
+.still-slug{
+  position:absolute;top:12px;left:12px;
+  font-family:var(--f-mono);
+  font-size:.58rem;letter-spacing:.22em;
+  background:var(--cream);color:var(--cherry-deep);
+  padding:4px 8px;font-weight:700;
+  z-index:2;
+}
+.still-caption{
+  position:absolute;bottom:0;left:0;right:0;
+  padding:50px 18px 18px;
+  background:linear-gradient(0deg, rgba(26,6,8,.9) 0%, transparent 100%);
+  color:var(--cream);
+  z-index:2;
+}
+.still-caption h3{
+  font-family:var(--f-head);
+  font-style:italic;
+  font-weight:400;
+  font-size:1rem;line-height:1.2;
+}
+.still-caption p{
+  font-family:var(--f-mono);
+  font-size:.62rem;letter-spacing:.2em;
+  color:var(--rose);
+  margin-top:4px;text-transform:uppercase;
+}
+
+/* =============================================================
+   CRITICISM — GATSBY MAGAZINE SPREAD
+   ============================================================= */
+#criticism{
+  background:var(--cream);
+  color:var(--ink);
+}
+.mag{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap:clamp(24px, 4vw, 60px);
+  align-items:start;
+}
+.mag-head{
+  grid-column:1 / -1;
+  display:flex;align-items:flex-end;justify-content:space-between;
+  gap:20px;flex-wrap:wrap;
+  border-bottom:2px solid var(--cherry);
+  padding-bottom:18px;
+  margin-bottom:20px;
+}
+.mag-issue{
+  font-family:var(--f-mono);
+  font-size:.68rem;letter-spacing:.3em;
+  color:var(--cherry);
+}
+.mag-title{
+  grid-column:1 / -1;
+  font-family:var(--f-display);
+  font-style:italic;
+  font-weight:700;
+  font-size:clamp(2.5rem, 6.5vw, 5.6rem);
+  line-height:.9;
+  letter-spacing:-.02em;
+  color:var(--ink);
+}
+.mag-title span{color:var(--cherry)}
+.mag-sub{
+  grid-column:1 / -1;
+  font-family:var(--f-head);
+  font-style:italic;
+  font-weight:300;
+  font-size:clamp(1.1rem, 2vw, 1.4rem);
+  line-height:1.4;
+  color:var(--cherry-deep);
+  max-width:70ch;
+  margin-bottom:30px;
+}
+.mag-meta{
+  font-family:var(--f-mono);
+  font-size:.7rem;letter-spacing:.2em;
+  color:var(--ink);
+  opacity:.7;
+}
+.mag-col p{
+  font-size:1rem;
+  line-height:1.78;
+  margin-bottom:1em;
+}
+.mag-col p:first-of-type::first-letter{
+  font-family:var(--f-display);
+  font-style:italic;
+  font-size:4.6em;
+  float:left;
+  line-height:.82;
+  margin:.04em .12em 0 0;
+  color:var(--cherry);
+  font-weight:700;
+}
+.mag-pullquote{
+  font-family:var(--f-display);
+  font-style:italic;
+  font-weight:700;
+  font-size:clamp(1.3rem, 2.5vw, 1.8rem);
+  line-height:1.25;
+  color:var(--cherry);
+  border-left:3px solid var(--cherry);
+  padding:12px 0 12px 18px;
+  margin:20px 0;
+}
+@media (max-width:800px){
+  .mag{grid-template-columns:1fr}
+}
+
+/* =============================================================
+   LOVING — books, painting, crew
+   ============================================================= */
+#loving{
+  background:var(--paper);
+  position:relative;
+  overflow:hidden;
+}
+.loving-grid{
+  display:grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap:clamp(14px, 2vw, 24px);
+}
+.love-card{
+  position:relative;
+  overflow:hidden;
+  border-radius:2px;
+  aspect-ratio:4/5;
+  background:linear-gradient(135deg, var(--cherry), var(--pink-hot));
+  box-shadow: 0 14px 40px -14px rgba(90,10,13,.4);
+  transition:transform .5s ease, box-shadow .5s ease;
+}
+.love-card:hover{
+  transform:translateY(-5px) rotate(-.3deg);
+  box-shadow: 0 24px 50px -14px rgba(255,42,132,.4);
+}
+.love-card img{
+  width:100%;height:100%;object-fit:cover;
+  filter: saturate(1.1);
+  transition: transform .8s ease;
+}
+.love-card:hover img{transform:scale(1.06)}
+.love-card .tag{
+  position:absolute;top:14px;left:14px;
+  font-family:var(--f-mono);font-size:.58rem;
+  letter-spacing:.25em;text-transform:uppercase;
+  background:var(--cream);color:var(--cherry-deep);
+  padding:5px 9px;font-weight:700;z-index:2;
+}
+.love-card .caption{
+  position:absolute;bottom:0;left:0;right:0;
+  padding:40px 18px 16px;
+  background:linear-gradient(0deg, rgba(26,6,8,.85), transparent);
+  color:var(--cream);z-index:2;
+}
+.love-card .caption h3{
+  font-family:var(--f-head);font-style:italic;
+  font-weight:400;font-size:1.05rem;line-height:1.2;
+}
+.love-card .caption p{
+  font-family:var(--f-mono);
+  font-size:.6rem;letter-spacing:.2em;
+  color:var(--rose);text-transform:uppercase;margin-top:4px;
+}
+.love-books{grid-column: span 5;aspect-ratio:1/1}
+.love-painting{grid-column: span 4;aspect-ratio:3/4}
+.love-crew{grid-column: span 3;aspect-ratio:3/4}
+.love-quote{
+  grid-column: span 12;
+  padding: clamp(24px, 4vw, 52px) clamp(20px, 3vw, 40px);
+  background:var(--cream);
+  border:2px solid var(--cherry);
+  border-radius:2px;
+  font-family:var(--f-display);
+  font-style:italic;
+  font-weight:400;
+  font-size:clamp(1.3rem, 3vw, 2rem);
+  line-height:1.3;
+  color:var(--cherry-deep);
+  margin-top:8px;
+}
+.love-quote span{color:var(--pink-hot);font-weight:700}
+
+.shelf{
+  margin-top:60px;
+}
+.shelf-label{
+  font-family:var(--f-mono);
+  font-size:.7rem;letter-spacing:.28em;
+  color:var(--cherry);
+  margin-bottom:18px;
+}
+.shelf-scroll{
+  display:flex;gap:16px;
+  overflow-x:auto;
+  padding:8px 4px 16px;
+  scrollbar-width:none;
+  -webkit-overflow-scrolling:touch;
+}
+.shelf-scroll::-webkit-scrollbar{display:none}
+.poster-card{
+  flex:0 0 auto;
+  width:clamp(140px, 20vw, 200px);
+  aspect-ratio:2/3;
+  background:linear-gradient(160deg, var(--cherry-deep), var(--cherry) 60%, var(--pink-hot));
+  border-radius:2px;
+  position:relative;
+  overflow:hidden;
+  color:var(--cream);
+  padding:16px;
+  display:flex;flex-direction:column;justify-content:flex-end;
+  transition: transform .4s ease;
+  box-shadow: 0 12px 30px -8px rgba(90,10,13,.4);
+}
+.poster-card:hover{transform:translateY(-6px) rotate(-1deg)}
+.poster-card::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(circle at 30% 20%, rgba(255,255,255,.25), transparent 55%);
+  pointer-events:none;
+}
+.poster-card-title{
+  font-family:var(--f-display);
+  font-style:italic;
+  font-weight:700;
+  font-size:1.15rem;
+  line-height:1.05;
+  margin-bottom:6px;
+  position:relative;z-index:1;
+}
+.poster-card-meta{
+  font-family:var(--f-mono);
+  font-size:.58rem;letter-spacing:.2em;
+  opacity:.85;
+  position:relative;z-index:1;
+}
+.poster-card-stars{
+  position:absolute;top:14px;right:14px;
+  font-size:.75rem;color:var(--cream);
+  opacity:.92;z-index:1;
+}
+
+@media (max-width:760px){
+  .love-books, .love-painting, .love-crew{grid-column:span 12;aspect-ratio:4/5}
+}
+
+/* =============================================================
+   CONTACT — END CREDITS
+   ============================================================= */
+#contact{
+  background:var(--cherry);
+  color:var(--cream);
+  text-align:center;
+  padding-bottom: clamp(80px, 12vw, 160px);
+}
+#contact .section-num{color:var(--rose-pale)}
+#contact .section-head{border-color:rgba(255,255,255,.3);justify-content:center}
+#contact .section-title{color:var(--cream)}
+#contact .section-title em{color:var(--rose-pale)}
+
+.fin{
+  font-family:var(--f-display);
+  font-style:italic;
+  font-weight:900;
+  font-size:clamp(4rem, 14vw, 10rem);
+  line-height:1;
+  letter-spacing:-.03em;
+  margin: 40px 0 20px;
+  background:linear-gradient(180deg, var(--cream), var(--rose-pale));
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+  text-shadow:0 4px 0 rgba(255,255,255,.08);
+}
+.fin-sub{
+  font-family:var(--f-head);
+  font-style:italic;
+  font-size:clamp(1rem, 2vw, 1.3rem);
+  max-width:48ch;margin:0 auto 40px;
+  line-height:1.5;
+  color:var(--rose-pale);
+}
+.contact-list{
+  display:flex;gap:14px;flex-wrap:wrap;justify-content:center;
+  margin-top:20px;
+}
+.contact-list a{
+  display:inline-flex;align-items:center;gap:10px;
+  font-family:var(--f-head);
+  font-weight:600;
+  font-size:.9rem;letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--cherry-deep);
+  background:var(--cream);
+  padding:14px 22px;
+  border-radius:100px;
+  transition: transform .3s ease, background .3s ease, color .3s ease;
+  position:relative;overflow:hidden;
+}
+.contact-list a::before{
+  content:'';position:absolute;inset:0;
+  background:var(--ink);
+  transform:translateY(100%);
+  transition:transform .35s ease;
+  z-index:0;
+}
+.contact-list a > *{position:relative;z-index:1}
+.contact-list a:hover{color:var(--cream);transform:translateY(-3px)}
+.contact-list a:hover::before{transform:translateY(0)}
+.contact-list svg{width:18px;height:18px}
+
+.endslate{
+  margin-top: clamp(60px, 10vw, 100px);
+  border-top:1px solid rgba(255,255,255,.25);
+  padding-top:30px;
+  font-family:var(--f-mono);
+  font-size:.68rem;letter-spacing:.28em;
+  color:var(--rose-pale);
+  opacity:.8;
+  display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;
+  text-transform:uppercase;
+}
+
+@media (prefers-reduced-motion: reduce){
+  *, *::before, *::after{
+    animation-duration:.01ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.01ms !important;
+  }
+  .title .ln-2{text-shadow:none}
+}
+</style>
+</head>
+<body>
+
+<div class="grain" aria-hidden="true"></div>
+
+<div class="cursor-trail" id="cursorTrail" aria-hidden="true"></div>
+<div class="cursor" id="cursor" aria-hidden="true"></div>
+
+<div class="progress" aria-hidden="true"><div class="progress-bar" id="progressBar"></div></div>
+
+<button class="clap" id="clap" aria-label="Clap the clapperboard">
+  <span class="clap-hint">SCENE · <span id="sceneNum">1</span> · TAKE · <span id="takeNum">1</span></span>
+  <span class="clap-take" id="clapTakeBadge">TAKE 1</span>
+  <svg viewBox="0 0 100 100" fill="none" aria-hidden="true">
+    <rect x="10" y="38" width="80" height="52" fill="#fff5f0" stroke="#1a0608" stroke-width="2"/>
+    <g>
+      <rect x="12" y="40" width="12" height="8" fill="#1a0608"/>
+      <rect x="36" y="40" width="12" height="8" fill="#1a0608"/>
+      <rect x="60" y="40" width="12" height="8" fill="#1a0608"/>
+      <rect x="24" y="40" width="12" height="8" fill="#fff5f0"/>
+      <rect x="48" y="40" width="12" height="8" fill="#fff5f0"/>
+      <rect x="72" y="40" width="16" height="8" fill="#1a0608"/>
+    </g>
+    <text x="50" y="68" font-family="JetBrains Mono, monospace" font-size="7" text-anchor="middle" fill="#c4161c" font-weight="700">MONIKA</text>
+    <text x="50" y="80" font-family="JetBrains Mono, monospace" font-size="5" text-anchor="middle" fill="#1a0608">PORTFOLIO · 2026</text>
+    <g class="clap-top" style="transform-origin: 10px 40px; transform:rotate(-28deg)">
+      <rect x="10" y="24" width="80" height="14" fill="#c4161c" stroke="#1a0608" stroke-width="2"/>
+      <rect x="12" y="26" width="8" height="10" fill="#fff5f0"/>
+      <rect x="28" y="26" width="8" height="10" fill="#fff5f0"/>
+      <rect x="44" y="26" width="8" height="10" fill="#fff5f0"/>
+      <rect x="60" y="26" width="8" height="10" fill="#fff5f0"/>
+      <rect x="76" y="26" width="8" height="10" fill="#fff5f0"/>
+    </g>
+  </svg>
+</button>
+
+<nav class="nav" aria-label="Primary">
+  <a href="#top" class="nav-mark">Monika <span>Ellingerová</span></a>
+  <ul class="nav-list">
+    <li><a href="#about">About</a></li>
+    <li><a href="#work">Work</a></li>
+    <li><a href="#stills">Stills</a></li>
+    <li><a href="#criticism">Writing</a></li>
+    <li><a href="#loving">Loving</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<header class="hero" id="top">
+
+  <!-- top framing bar -->
+  <div class="hero-top-bar" aria-hidden="true">
+    <span>ROLL · 001 / VOL. XXVI</span>
+    <span class="hero-corner-r">AN ORIGINAL · 4K · DOLBY VISION</span>
+    <span>RUNTIME · 6 SECTIONS</span>
+  </div>
+
+  <!-- vertical spine label, left edge -->
+  <div class="hero-spine" aria-hidden="true">
+    A <span>MONIKA ELLINGEROVÁ</span> PICTURE · <span>2026</span>
+  </div>
+
+  <!-- vertical page number, right edge -->
+  <div class="hero-pg" aria-hidden="true">
+    <span class="pg-num">01</span>
+    <span class="pg-lab">MOTION · PICTURE</span>
+  </div>
+
+  <!-- rotating press quote, absolute -->
+  <div class="press-quote">
+    <div class="quote-stack" id="quoteStack" aria-live="polite">
+      <q class="active">Programs by day, storyboards by night — a rare double feature.</q>
+      <q>A cinephile who also ships code. In 2026 this is basically a unicorn.</q>
+      <q>Has the eye of a cinematographer and the patience of an engineer.</q>
+      <q>If Letterboxd and GitHub had a child, she would be it.</q>
+      <q>Opening wide: now taking meetings in Prague, LA, London, and the cloud.</q>
+    </div>
+    <div class="quote-source">— THE PRESS, LATE REVIEWS</div>
+  </div>
+
+  <div class="hero-inner">
+    <div class="poster">
+
+      <!-- LEFT: PORTRAIT -->
+      <div class="poster-photo">
+        <div class="photo-ticks" aria-hidden="true"><i></i><i></i><i></i></div>
+        <img src="images/00-hero.jpg" alt="Monika at a Mauritius viewpoint, mountain and ocean behind"
+             onerror="this.onerror=null;this.src='images/01-portrait.jpg';">
+        <div class="photo-label" aria-hidden="true">
+          <span>FR. 001</span>
+          <span>EXT · MAURITIUS</span>
+        </div>
+      </div>
+
+      <!-- RIGHT: TITLE STACK -->
+      <div class="poster-title-col">
+        <div class="eyebrow">
+          <span class="line"></span>
+          <span>A Motion Picture By</span>
+          <span class="line"></span>
+        </div>
+
+        <h1 class="title" aria-label="Monika Ellingerová">
+          <span class="ln ln-1">Monika</span>
+          <span class="ln ln-2">Ellingerov<span class="accent">á</span></span>
+        </h1>
+
+        <div class="roles" aria-label="Credits">
+          <span>Directed</span>
+          <span>Written</span>
+          <span>Designed</span>
+          <span>Coded</span>
+        </div>
+      </div>
+
+      <!-- BOTTOM ROW: laurel + stars + now playing + greenlight -->
+      <div class="poster-row-2">
+
+        <div class="laurel-block">
+          <div class="laurel" title="Official Selection 2026">
+            <svg viewBox="0 0 120 120" fill="none" aria-hidden="true">
+              <!-- left wreath -->
+              <g stroke="#fff5f0" stroke-width="2" fill="none" stroke-linecap="round">
+                <path d="M 22 60 Q 16 52 20 40"/>
+                <path d="M 22 60 Q 16 60 12 56"/>
+                <path d="M 22 60 Q 16 68 20 80"/>
+                <path d="M 18 50 Q 13 46 9 48"/>
+                <path d="M 18 70 Q 13 74 9 72"/>
+                <path d="M 22 60 Q 17 60 14 64"/>
+              </g>
+              <g fill="#fff5f0">
+                <ellipse cx="20" cy="40" rx="3.5" ry="6" transform="rotate(-20 20 40)"/>
+                <ellipse cx="14" cy="48" rx="3" ry="5.5" transform="rotate(-30 14 48)"/>
+                <ellipse cx="10" cy="56" rx="3" ry="5.5" transform="rotate(-40 10 56)"/>
+                <ellipse cx="10" cy="64" rx="3" ry="5.5" transform="rotate(40 10 64)"/>
+                <ellipse cx="14" cy="72" rx="3" ry="5.5" transform="rotate(30 14 72)"/>
+                <ellipse cx="20" cy="80" rx="3.5" ry="6" transform="rotate(20 20 80)"/>
+              </g>
+              <!-- right wreath -->
+              <g stroke="#fff5f0" stroke-width="2" fill="none" stroke-linecap="round">
+                <path d="M 98 60 Q 104 52 100 40"/>
+                <path d="M 98 60 Q 104 60 108 56"/>
+                <path d="M 98 60 Q 104 68 100 80"/>
+                <path d="M 102 50 Q 107 46 111 48"/>
+                <path d="M 102 70 Q 107 74 111 72"/>
+                <path d="M 98 60 Q 103 60 106 64"/>
+              </g>
+              <g fill="#fff5f0">
+                <ellipse cx="100" cy="40" rx="3.5" ry="6" transform="rotate(20 100 40)"/>
+                <ellipse cx="106" cy="48" rx="3" ry="5.5" transform="rotate(30 106 48)"/>
+                <ellipse cx="110" cy="56" rx="3" ry="5.5" transform="rotate(40 110 56)"/>
+                <ellipse cx="110" cy="64" rx="3" ry="5.5" transform="rotate(-40 110 64)"/>
+                <ellipse cx="106" cy="72" rx="3" ry="5.5" transform="rotate(-30 106 72)"/>
+                <ellipse cx="100" cy="80" rx="3.5" ry="6" transform="rotate(-20 100 80)"/>
+              </g>
+              <!-- top star -->
+              <path d="M 60 6 L 62 12 L 68 12 L 63 16 L 65 22 L 60 18 L 55 22 L 57 16 L 52 12 L 58 12 Z" fill="#fff5f0"/>
+            </svg>
+            <div class="laurel-text">
+              OFFICIAL<br>SELECTION
+              <span class="year">MMXXVI</span>
+            </div>
+          </div>
+
+          <div class="star-block">
+            <div class="stars" id="rater" aria-label="Rate this portfolio">
+              <button aria-label="1 star">★</button>
+              <button aria-label="2 stars">★</button>
+              <button aria-label="3 stars">★</button>
+              <button aria-label="4 stars">★</button>
+              <button aria-label="5 stars">★</button>
+            </div>
+            <div class="stars-label" id="rateLabel">Rate · The · Film</div>
+          </div>
+        </div>
+
+        <div class="now-block">
+          <span class="big">NOW PLAYING</span>
+          <strong>Prague · Worldwide · Remote</strong><br>
+          Age 23 · CS Student · Director<br>
+          UX/UI · Web · AI (CNN / RNN)
+        </div>
+
+        <a class="greenlight" href="#contact">
+          <span class="dot"></span>
+          <span>Green-light This</span>
+          <span class="arr">→</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- barcode bottom-right -->
+  <div class="barcode" aria-hidden="true">
+    <span class="barcode-num">ME · 2026 · X42 · ★★★★★</span>
+    <div class="barcode-bars">
+      <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+    </div>
+  </div>
+</header>
+
+<section id="about">
+  <div class="section-head reveal">
+    <div>
+      <div class="section-num">ACT I · SC. 01</div>
+      <h2 class="section-title">Cast &amp; <em>Crew</em></h2>
+    </div>
+    <div class="section-kicker">SHE IS · BOTH SIDES OF THE CAMERA</div>
+  </div>
+
+  <div class="castcrew">
+    <div class="reveal">
+      <p class="castcrew-lead">
+        I'm Monika — a 23-year-old computer science student from the Czech Republic who makes <span>interfaces during the day</span> and <span>storyboards at night</span>. I live where film and product design meet, and I'm convinced that's a more useful place to stand than either one alone.
+      </p>
+      <div class="castcrew-body">
+        <p>On the technical side, I design and build: product-grade UX/UI, web and mobile apps, and AI work with CNNs and RNNs. I like tight type, generous whitespace, a clear hierarchy, and the kind of animation that earns its keep.</p>
+        <p>On the film side, I direct, produce, write, and storyboard. I'm a devout cinephile — Baz Luhrmann, Sofia Coppola, Wong Kar-wai, Greta Gerwig, the A24 house style, anything Roger Deakins touches. I read Sarah J. Maas in Czech, paint landscapes, play golf badly and ski well, and I am, from time to time, the girl on the cliff getting her hair blown sideways by a storm.</p>
+        <p>I'm open to remote work anywhere, but I'd especially love to get close to the film / TV industry — Netflix, Warner Bros., A24 — on any team where taste and technology have to talk to each other.</p>
+      </div>
+    </div>
+
+    <aside class="credits reveal" aria-label="Billing block">
+      <div class="credits-row"><span class="credits-role">Based in</span><span class="credits-name">Prague, Czech Republic · Open Remote</span></div>
+      <div class="credits-row"><span class="credits-role">Age</span><span class="credits-name">23, in the most patient sense</span></div>
+      <div class="credits-role" style="margin-top:18px;font-size:.66rem">STARRING</div>
+      <div class="credits-row"><span class="credits-role">Product</span><span class="credits-name">UX/UI Design · Web &amp; App Dev</span></div>
+      <div class="credits-row"><span class="credits-role">AI</span><span class="credits-name">Convolutional &amp; Recurrent Nets</span></div>
+      <div class="credits-role" style="margin-top:18px;font-size:.66rem">&amp; CREW</div>
+      <div class="credits-row"><span class="credits-role">Director</span><span class="credits-name">Short Film · Music Video · Spec</span></div>
+      <div class="credits-row"><span class="credits-role">Writer</span><span class="credits-name">Screenplays · Shorts · Pilots</span></div>
+      <div class="credits-row"><span class="credits-role">Producer</span><span class="credits-name">Student Productions · Side Projects</span></div>
+      <div class="credits-role" style="margin-top:18px;font-size:.66rem">WITH SPECIAL THANKS TO</div>
+      <div class="credits-row"><span class="credits-role">Paints</span><span class="credits-name">Oil &amp; acrylic landscape studies</span></div>
+      <div class="credits-row"><span class="credits-role">Reads</span><span class="credits-name">Sarah J. Maas · Donna Tartt · Screenplays</span></div>
+      <div class="credits-row"><span class="credits-role">Moves</span><span class="credits-name">Golf · Skiing · Ocean cliffs</span></div>
+    </aside>
+  </div>
+</section>
+
+<section id="work">
+  <div class="section-head reveal">
+    <div>
+      <div class="section-num">ACT II · SC. 02</div>
+      <h2 class="section-title">Featured <em>Presentation</em></h2>
+    </div>
+    <div class="section-kicker">TAP A CARD TO FLIP · TAP A TAB TO RECUT</div>
+  </div>
+
+  <div class="cuts reveal" role="tablist" aria-label="Cut selector">
+    <button class="cut-btn active" data-cut="directors" role="tab" aria-selected="true">Director's Cut</button>
+    <button class="cut-btn" data-cut="theatrical" role="tab" aria-selected="false">Theatrical Cut</button>
+    <button class="cut-btn" data-cut="extended" role="tab" aria-selected="false">Extended Edition</button>
+    <span class="cut-indicator" id="cutIndicator"></span>
+  </div>
+
+  <div class="work-grid reveal">
+
+    <div class="work-group" data-group="directors">
+      <article class="work-card">
+        <div class="work-card-inner">
+          <div class="work-face work-front">
+            <span class="work-genre">SHORT · 14 min</span>
+            <span class="work-runtime">2025</span>
+            <h3 class="work-title">Paper Houses</h3>
+            <p class="work-subtitle">Director · Writer · Editor</p>
+            <span class="work-flip-hint">TAP FOR DETAILS ↻</span>
+          </div>
+          <div class="work-face work-back">
+            <div>
+              <h4 class="work-back-title">Paper Houses</h4>
+              <p class="work-back-body">A short about a girl who builds scale models of every apartment she's ever been dumped in. Shot on a 35mm still camera at 1&nbsp;fps. Premiered at a student festival in Brno.</p>
+              <div class="work-back-tech">
+                <span>Direction</span><span>Screenplay</span><span>Edit</span><span>16mm</span>
+              </div>
+            </div>
+            <span class="work-flip-hint">TAP TO RETURN ↺</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="work-card">
+        <div class="work-card-inner">
+          <div class="work-face work-front">
+            <span class="work-genre">MUSIC VIDEO</span>
+            <span class="work-runtime">2024</span>
+            <h3 class="work-title">Nevermind, Keep Going</h3>
+            <p class="work-subtitle">Co-director · DP · Producer</p>
+            <span class="work-flip-hint">TAP FOR DETAILS ↻</span>
+          </div>
+          <div class="work-face work-back">
+            <div>
+              <h4 class="work-back-title">Nevermind, Keep Going</h4>
+              <p class="work-back-body">Music video for an indie Czech artist. Three locations, two dancers, one rainstorm we did not plan. Cherry-pink grade, blown-out highlights, lens whacking.</p>
+              <div class="work-back-tech">
+                <span>Direction</span><span>DP</span><span>Producing</span><span>DaVinci</span>
+              </div>
+            </div>
+            <span class="work-flip-hint">TAP TO RETURN ↺</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="work-card">
+        <div class="work-card-inner">
+          <div class="work-face work-front nocase">
+            <span class="work-genre">SPEC SCRIPT</span>
+            <span class="work-runtime">In dev.</span>
+            <h3 class="work-title">Lidova</h3>
+            <p class="work-subtitle">Writer · Pilot, 54 pp.</p>
+            <span class="work-flip-hint">TAP FOR DETAILS ↻</span>
+          </div>
+          <div class="work-face work-back">
+            <div>
+              <h4 class="work-back-title">Lidova — Pilot</h4>
+              <p class="work-back-body">TV pilot about three women running a struggling print newspaper in a mid-sized Czech town as the paper dies. Tonal reference: <em>The Bear</em> meets <em>Frances Ha</em>.</p>
+              <div class="work-back-tech">
+                <span>Screenwriting</span><span>Tone</span><span>Structure</span>
+              </div>
+            </div>
+            <span class="work-flip-hint">TAP TO RETURN ↺</span>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <div class="work-group hidden" data-group="theatrical">
+      <article class="work-card">
+        <div class="work-card-inner">
+          <div class="work-face work-front">
+            <span class="work-genre">UX CASE STUDY</span>
+            <span class="work-runtime">6 wk sprint</span>
+            <h3 class="work-title">Reel</h3>
+            <p class="work-subtitle">Design &amp; Build · Lead</p>
+            <span class="work-flip-hint">TAP FOR DETAILS ↻</span>
+          </div>
+          <div class="work-face work-back">
+            <div>
+              <h4 class="work-back-title">Reel — the film journal people actually finish</h4>
+              <p class="work-back-body">A mobile app for serious cinephiles to log, annotate, and revisit films. Shipped a clickable prototype in Figma + a working React Native build in six weeks. Retention on the test cohort was 3.4× the baseline.</p>
+              <div class="work-back-tech">
+                <span>Figma</span><span>React Native</span><span>Research</span><span>Testing</span>
+              </div>
+            </div>
+            <span class="work-flip-hint">TAP TO RETURN ↺</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="work-card">
+        <div class="work-card-inner">
+          <div class="work-face work-front">
+            <span class="work-genre">PRODUCT · WEB</span>
+            <span class="work-runtime">2024</span>
+            <h3 class="work-title">Atelier OS</h3>
+            <p class="work-subtitle">Lead UX · Front-end</p>
+            <span class="work-flip-hint">TAP FOR DETAILS ↻</span>
+          </div>
+          <div class="work-face work-back">
+            <div>
+              <h4 class="work-back-title">Atelier OS</h4>
+              <p class="work-back-body">Design system + dashboard for a small European studio. Typography, tokens, 40+ components, dark &amp; light; accessible by default. Shipped in Next.js.</p>
+              <div class="work-back-tech">
+                <span>Next.js</span><span>Tokens</span><span>A11y</span><span>TypeScript</span>
+              </div>
+            </div>
+            <span class="work-flip-hint">TAP TO RETURN ↺</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="work-card">
+        <div class="work-card-inner">
+          <div class="work-face work-front">
+            <span class="work-genre">AI · RESEARCH</span>
+            <span class="work-runtime">School proj.</span>
+            <h3 class="work-title">Frame 404</h3>
+            <p class="work-subtitle">CNN · Shot classifier</p>
+            <span class="work-flip-hint">TAP FOR DETAILS ↻</span>
+          </div>
+          <div class="work-face work-back">
+            <div>
+              <h4 class="work-back-title">Frame 404 — shot classifier</h4>
+              <p class="work-back-body">A CNN that takes a single film frame and guesses the shot type (close-up / medium / wide / insert). Trained on a hand-labeled dataset of 8,000 stills. 87% top-1 on holdout.</p>
+              <div class="work-back-tech">
+                <span>PyTorch</span><span>CNN</span><span>Dataset</span><span>Eval</span>
+              </div>
+            </div>
+            <span class="work-flip-hint">TAP TO RETURN ↺</span>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <div class="work-group hidden" data-group="extended">
+      <article class="work-card">
+        <div class="work-card-inner">
+          <div class="work-face work-front nocase">
+            <span class="work-genre">GENERATIVE</span>
+            <span class="work-runtime">Ongoing</span>
+            <h3 class="work-title">Grain Studies</h3>
+            <p class="work-subtitle">RNN · Colorist's assistant</p>
+            <span class="work-flip-hint">TAP FOR DETAILS ↻</span>
+          </div>
+          <div class="work-face work-back">
+            <div>
+              <h4 class="work-back-title">Grain Studies</h4>
+              <p class="work-back-body">An RNN trained on color-graded sequences that suggests the next LUT given a rough cut. Intended as a first-pass assistant for colorists. Very much a toy. Very much fun.</p>
+              <div class="work-back-tech">
+                <span>PyTorch</span><span>LSTM</span><span>DaVinci</span>
+              </div>
+            </div>
+            <span class="work-flip-hint">TAP TO RETURN ↺</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="work-card">
+        <div class="work-card-inner">
+          <div class="work-face work-front">
+            <span class="work-genre">ZINE</span>
+            <span class="work-runtime">Print, 48 pp.</span>
+            <h3 class="work-title">Last Reel</h3>
+            <p class="work-subtitle">Editor · Designer</p>
+            <span class="work-flip-hint">TAP FOR DETAILS ↻</span>
+          </div>
+          <div class="work-face work-back">
+            <div>
+              <h4 class="work-back-title">Last Reel Zine</h4>
+              <p class="work-back-body">A 48-page print zine of film criticism I made with two friends — essays, interviews, and photography from dying repertory cinemas. Printed 120 copies; sold out in two weekends.</p>
+              <div class="work-back-tech">
+                <span>Editorial</span><span>Print</span><span>Photography</span>
+              </div>
+            </div>
+            <span class="work-flip-hint">TAP TO RETURN ↺</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="work-card">
+        <div class="work-card-inner">
+          <div class="work-face work-front nocase">
+            <span class="work-genre">PAINTING</span>
+            <span class="work-runtime">2024–</span>
+            <h3 class="work-title">Landscape Series</h3>
+            <p class="work-subtitle">Oil &amp; acrylic</p>
+            <span class="work-flip-hint">TAP FOR DETAILS ↻</span>
+          </div>
+          <div class="work-face work-back">
+            <div>
+              <h4 class="work-back-title">Landscape Series</h4>
+              <p class="work-back-body">Ongoing personal series — painting every cliff, field, and sunset I see while hiking or driving. Same impulse as storyboarding, just slower, and in oil.</p>
+              <div class="work-back-tech">
+                <span>Oil</span><span>Acrylic</span><span>Plein-air</span>
+              </div>
+            </div>
+            <span class="work-flip-hint">TAP TO RETURN ↺</span>
+          </div>
+        </div>
+      </article>
+    </div>
+
+  </div>
+</section>
+
+<section id="stills">
+  <div class="section-head reveal">
+    <div>
+      <div class="section-num">ACT II · SC. 03</div>
+      <h2 class="section-title">Dailies /<br><em>Film Stills</em></h2>
+    </div>
+    <div class="section-kicker">↔ DRAG · SCROLL · SWIPE</div>
+  </div>
+
+  <div class="stills-band reveal">
+    <div class="stills-scroll" id="stillsScroll">
+      <figure class="still">
+        <div class="still-bg"></div>
+        <img src="images/05-cliff-storm.jpg" alt="Monika on a cliff, wind in her hair, stormy ocean" onerror="this.style.display='none'">
+        <span class="still-slug">01A · EXT</span>
+        <figcaption class="still-caption">
+          <h3>The girl who was never supposed to know what storms sound like from this close.</h3>
+          <p>Cliff · Dusk · Handheld</p>
+        </figcaption>
+      </figure>
+      <figure class="still">
+        <div class="still-bg"></div>
+        <img src="images/06-madeira.jpg" alt="Black sand beach, Madeira, green mountains" onerror="this.style.display='none'">
+        <span class="still-slug">02B · EXT</span>
+        <figcaption class="still-caption">
+          <h3>Paradise, shot wide, no dialogue. The wind does the writing.</h3>
+          <p>Madeira · Morning · Wide</p>
+        </figcaption>
+      </figure>
+      <figure class="still">
+        <div class="still-bg"></div>
+        <img src="images/10-alps.jpg" alt="Alps ski slope with sun flare" onerror="this.style.display='none'">
+        <span class="still-slug">03A · EXT</span>
+        <figcaption class="still-caption">
+          <h3>A lens flare that cost nothing and means everything.</h3>
+          <p>The Alps · Midday · Available light</p>
+        </figcaption>
+      </figure>
+      <figure class="still">
+        <div class="still-bg"></div>
+        <img src="images/04-golf.jpg" alt="Monika mid golf swing under a dramatic grey sky" onerror="this.style.display='none'">
+        <span class="still-slug">04C · EXT</span>
+        <figcaption class="still-caption">
+          <h3>The protagonist's hobby is supposed to tell you something about her. This is that shot.</h3>
+          <p>Fairway · Overcast · Tele</p>
+        </figcaption>
+      </figure>
+      <figure class="still">
+        <div class="still-bg"></div>
+        <img src="images/08-cliff-sit.jpg" alt="Monika sitting on a cliff edge, hair back, ocean" onerror="this.style.display='none'">
+        <span class="still-slug">05B · EXT</span>
+        <figcaption class="still-caption">
+          <h3>Stillness, held long enough that you start to wonder what she's thinking.</h3>
+          <p>Cliff · Golden hour · Over-shoulder</p>
+        </figcaption>
+      </figure>
+      <figure class="still">
+        <div class="still-bg"></div>
+        <img src="images/03-crew.jpg" alt="Monika with two friends at dinner" onerror="this.style.display='none'">
+        <span class="still-slug">06A · INT</span>
+        <figcaption class="still-caption">
+          <h3>The ensemble scene — someone has just said something truly unserious.</h3>
+          <p>Dinner · Practical light · Medium</p>
+        </figcaption>
+      </figure>
+      <figure class="still">
+        <div class="still-bg"></div>
+        <img src="images/07-shots.jpg" alt="Two amber shot glasses in warm light" onerror="this.style.display='none'">
+        <span class="still-slug">07D · INT</span>
+        <figcaption class="still-caption">
+          <h3>Insert shot. Amber glass, no people. The conversation is elsewhere.</h3>
+          <p>Bar · Night · Macro</p>
+        </figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section id="criticism">
+  <div class="mag">
+    <div class="mag-head reveal">
+      <div class="mag-issue">ISSUE Nº 07 · THE COLOR ISSUE · SPRING</div>
+      <div class="mag-issue">WORDS · M. ELLINGEROVÁ</div>
+    </div>
+
+    <h2 class="mag-title reveal"><em>The</em> Great<br><span>Gatsby</span>, <em>Loud</em>.</h2>
+    <p class="mag-sub reveal">
+      On Baz Luhrmann's 2013 rendering of Fitzgerald — why the maximalism is the argument, not the distraction, and why it may be the most correct Gatsby we are going to get.
+    </p>
+
+    <div class="mag-col reveal">
+      <p>The complaint most people have about Baz Luhrmann's <em>The Great Gatsby</em> is essentially a complaint about volume: too much music, too much confetti, too many sequins, too much camera. Fitzgerald's prose is restrained, the argument goes, and Luhrmann is not, therefore the film must be wrong. I've always found this argument to be, with respect, a little too quiet to be correct.</p>
+
+      <p class="mag-pullquote">Gatsby is not a man. He is a production designer's brief, and Luhrmann is the only director who ever read it that way.</p>
+
+      <p>The whole novel is about a man who has invented himself loudly to catch the attention of a woman who prefers soft lighting. Jay Gatsby spends five years building a party so loud that the ambient noise of New York stops registering — and when Daisy finally walks through it, every bit of that volume is for her. Luhrmann understands this. The confetti is not distraction, it's thesis.</p>
+    </div>
+
+    <div class="mag-col reveal">
+      <p>Leonardo DiCaprio's performance is the other thing people miss when they complain about the spectacle. He plays Gatsby as someone who is constantly listening for Daisy to arrive from another room. The smile is a door that opens. The eyes flick. He is attentive in the specific way that self-invented people are attentive — because self-invention is a full-time job and you cannot afford to miss a cue.</p>
+
+      <p>And then there is the color. Green, of course — the dock light, the envy, the money — but also the champagne golds, the champagne pinks, the champagne everything. Catherine Martin's production design does what Fitzgerald's prose does: it treats wealth as a <em>moral climate</em>, not a decoration.</p>
+
+      <p class="mag-pullquote">You do not get to the green light without the confetti. The confetti <em>is</em> the green light.</p>
+
+      <p>Is the film perfect? No. The framing device with Nick in a sanatorium is clumsy, and the Jay-Z needle drops have aged into something like affectionate embarrassment. But when Gatsby turns to Nick in the Plaza and says, with his whole chest, that of course you can repeat the past — the film catches, for one second, the thing the novel is actually about: the American habit of believing that enough noise, directed in the right direction, will be heard by the one person you want to hear it. It is not a quiet movie. It was never supposed to be.</p>
+
+      <div style="margin-top:20px;padding-top:18px;border-top:1px solid var(--cherry);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px">
+        <span class="mag-meta">★ ★ ★ ★ ½ / 5</span>
+        <span class="mag-meta">4K · DIR. B. LUHRMANN · 2013</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="loving">
+  <div class="section-head reveal">
+    <div>
+      <div class="section-num">ACT III · SC. 04</div>
+      <h2 class="section-title">Things I'm <em>Loving</em></h2>
+    </div>
+    <div class="section-kicker">OFF THE CLOCK · ON THE RECORD</div>
+  </div>
+
+  <div class="loving-grid reveal">
+    <div class="love-card love-books">
+      <span class="tag">The Stack</span>
+      <img src="images/02-books.jpg" alt="Stack of Sarah J. Maas books in Czech" onerror="this.style.display='none'">
+      <div class="caption">
+        <h3>Sarah J. Maas, in Czech</h3>
+        <p>Court · Ashes · Thorns</p>
+      </div>
+    </div>
+    <div class="love-card love-painting">
+      <span class="tag">Studio</span>
+      <img src="images/09-painting.jpg" alt="Landscape painting with mountain and yellow sunset" onerror="this.style.display='none'">
+      <div class="caption">
+        <h3>Landscape w/ yellow sunset</h3>
+        <p>Oil on canvas · 2024</p>
+      </div>
+    </div>
+    <div class="love-card love-crew">
+      <span class="tag">The Ensemble</span>
+      <img src="images/03-crew.jpg" alt="Monika with two friends" onerror="this.style.display='none'">
+      <div class="caption">
+        <h3>My people</h3>
+        <p>Supporting cast · credit billed</p>
+      </div>
+    </div>
+
+    <blockquote class="love-quote">
+      I keep a list of everything I ever read, watch, paint, ski, or fall a little bit in love with. The portfolio is the <span>public cut</span>. The list is the <span>private cut</span>. Ask me about either.
+    </blockquote>
+  </div>
+
+  <div class="shelf reveal">
+    <div class="shelf-label">◆ CURRENTLY IN HEAVY ROTATION ◆</div>
+    <div class="shelf-scroll">
+      <div class="poster-card">
+        <span class="poster-card-stars">★★★★★</span>
+        <div class="poster-card-title">The Great Gatsby</div>
+        <div class="poster-card-meta">Luhrmann · 2013</div>
+      </div>
+      <div class="poster-card">
+        <span class="poster-card-stars">★★★★★</span>
+        <div class="poster-card-title">Lady Bird</div>
+        <div class="poster-card-meta">Gerwig · 2017</div>
+      </div>
+      <div class="poster-card">
+        <span class="poster-card-stars">★★★★½</span>
+        <div class="poster-card-title">Past Lives</div>
+        <div class="poster-card-meta">C. Song · 2023</div>
+      </div>
+      <div class="poster-card">
+        <span class="poster-card-stars">★★★★★</span>
+        <div class="poster-card-title">In the Mood for Love</div>
+        <div class="poster-card-meta">W. Kar-wai · 2000</div>
+      </div>
+      <div class="poster-card">
+        <span class="poster-card-stars">★★★★½</span>
+        <div class="poster-card-title">Marie Antoinette</div>
+        <div class="poster-card-meta">S. Coppola · 2006</div>
+      </div>
+      <div class="poster-card">
+        <span class="poster-card-stars">★★★★½</span>
+        <div class="poster-card-title">Aftersun</div>
+        <div class="poster-card-meta">C. Wells · 2022</div>
+      </div>
+      <div class="poster-card">
+        <span class="poster-card-stars">★★★★★</span>
+        <div class="poster-card-title">Portrait of a Lady on Fire</div>
+        <div class="poster-card-meta">Sciamma · 2019</div>
+      </div>
+      <div class="poster-card">
+        <span class="poster-card-stars">★★★★</span>
+        <div class="poster-card-title">Challengers</div>
+        <div class="poster-card-meta">Guadagnino · 2024</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="section-head reveal">
+    <div>
+      <div class="section-num">ACT IV · SC. 05</div>
+      <h2 class="section-title">End <em>Credits</em></h2>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="fin">Fin.</div>
+    <p class="fin-sub">
+      Write to me about a film, a feature, a bug, a brief, or a job. I open every email. I don't always open every DM — but I try.
+    </p>
+
+    <div class="contact-list">
+      <a href="mailto:monika.ellingerova7@gmail.com">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg>
+        <span>Email</span>
+      </a>
+      <a href="https://letterboxd.com/" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="3"/><circle cx="12" cy="12" r="3"/><circle cx="19" cy="12" r="3"/></svg>
+        <span>Letterboxd</span>
+      </a>
+      <a href="https://www.instagram.com/" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
+        <span>Instagram</span>
+      </a>
+      <a href="#top">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></svg>
+        <span>Back to top</span>
+      </a>
+    </div>
+
+    <div class="endslate">
+      <span>© 2026 · Monika Ellingerová</span>
+      <span>Property of the Studio of Good Taste</span>
+      <span>Shot on location · Prague &amp; the Internet</span>
+    </div>
+  </div>
+</section>
+
+<script>
+/* Custom cursor */
+(function(){
+  if (window.matchMedia && window.matchMedia('(pointer: coarse)').matches) return;
+  const cursor = document.getElementById('cursor');
+  const trail  = document.getElementById('cursorTrail');
+  if (!cursor || !trail) return;
+  let tx = 0, ty = 0;
+  let targetX = 0, targetY = 0;
+
+  document.addEventListener('mousemove', e => {
+    targetX = e.clientX; targetY = e.clientY;
+    cursor.style.transform = `translate(${targetX}px, ${targetY}px) translate(-50%,-50%)`;
+  });
+
+  function animate(){
+    tx += (targetX - tx) * 0.18;
+    ty += (targetY - ty) * 0.18;
+    trail.style.transform = `translate(${tx}px, ${ty}px) translate(-50%,-50%)`;
+    requestAnimationFrame(animate);
+  }
+  animate();
+
+  const hoverables = 'a, button, .work-card, .still, .love-card, .poster-card, .laurel';
+  document.querySelectorAll(hoverables).forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cursor.classList.add('hover');
+      trail.classList.add('hover');
+    });
+    el.addEventListener('mouseleave', () => {
+      cursor.classList.remove('hover');
+      trail.classList.remove('hover');
+    });
+  });
+})();
+
+/* Scroll progress */
+(function(){
+  const bar = document.getElementById('progressBar');
+  if (!bar) return;
+  function update(){
+    const h = document.documentElement;
+    const scrolled = h.scrollTop || document.body.scrollTop;
+    const max = h.scrollHeight - h.clientHeight;
+    const pct = max ? (scrolled / max) * 100 : 0;
+    bar.style.width = pct + '%';
+  }
+  document.addEventListener('scroll', update, {passive:true});
+  update();
+})();
+
+/* Reveal on scroll */
+(function(){
+  const els = document.querySelectorAll('.reveal');
+  if (!('IntersectionObserver' in window)) {
+    els.forEach(e => e.classList.add('in'));
+    return;
+  }
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(en => {
+      if (en.isIntersecting) {
+        en.target.classList.add('in');
+        io.unobserve(en.target);
+      }
+    });
+  }, {threshold: 0.12});
+  els.forEach(e => io.observe(e));
+})();
+
+/* Rotating quotes */
+(function(){
+  const stack = document.getElementById('quoteStack');
+  if (!stack) return;
+  const quotes = stack.querySelectorAll('q');
+  let i = 0;
+  function tick(){
+    quotes[i].classList.remove('active');
+    i = (i + 1) % quotes.length;
+    quotes[i].classList.add('active');
+  }
+  setInterval(tick, 4200);
+})();
+
+/* Clapperboard */
+(function(){
+  const clap = document.getElementById('clap');
+  if (!clap) return;
+  const takeBadge = document.getElementById('clapTakeBadge');
+  const sceneNum = document.getElementById('sceneNum');
+  const takeNum = document.getElementById('takeNum');
+  const stack = document.getElementById('quoteStack');
+  let take = 1, scene = 1;
+
+  clap.addEventListener('click', () => {
+    clap.classList.remove('clapped');
+    void clap.offsetWidth;
+    clap.classList.add('clapped');
+
+    take++;
+    if (take > 9){ scene++; take = 1; }
+    takeBadge.textContent = 'TAKE ' + take;
+    if (sceneNum) sceneNum.textContent = scene;
+    if (takeNum) takeNum.textContent = take;
+
+    if (stack){
+      const quotes = stack.querySelectorAll('q');
+      let i = 0;
+      quotes.forEach((q, idx) => { if (q.classList.contains('active')) i = idx; });
+      quotes[i].classList.remove('active');
+      const next = (i + 1) % quotes.length;
+      quotes[next].classList.add('active');
+    }
+  });
+})();
+
+/* Star rater */
+(function(){
+  const rater = document.getElementById('rater');
+  if (!rater) return;
+  const label = document.getElementById('rateLabel');
+  const btns = rater.querySelectorAll('button');
+  const messages = [
+    'ONE STAR · YOU ARE NOT THE TARGET AUDIENCE',
+    'TWO STARS · FAIR',
+    'THREE STARS · PROMISING',
+    'FOUR STARS · GREEN-LIT',
+    'FIVE STARS · CRITERION-BOUND'
+  ];
+  let locked = -1;
+
+  btns.forEach((b, i) => {
+    b.addEventListener('mouseenter', () => {
+      btns.forEach((bb, j) => bb.classList.toggle('on', j <= i));
+      if (label) label.textContent = messages[i];
+    });
+    b.addEventListener('click', () => {
+      locked = i;
+      btns.forEach((bb, j) => bb.classList.toggle('on', j <= i));
+      if (label) label.textContent = messages[i];
+    });
+  });
+  rater.addEventListener('mouseleave', () => {
+    if (locked < 0){
+      btns.forEach(bb => bb.classList.remove('on'));
+      if (label) label.textContent = 'RATE · THE · FILM';
+    } else {
+      btns.forEach((bb, j) => bb.classList.toggle('on', j <= locked));
+      if (label) label.textContent = messages[locked];
+    }
+  });
+})();
+
+/* Cut tabs */
+(function(){
+  const btns = document.querySelectorAll('.cut-btn');
+  const indicator = document.getElementById('cutIndicator');
+  const groups = document.querySelectorAll('.work-group');
+  if (!btns.length || !indicator) return;
+
+  function moveIndicator(btn){
+    const parent = btn.parentElement;
+    const pRect = parent.getBoundingClientRect();
+    const bRect = btn.getBoundingClientRect();
+    indicator.style.left  = (bRect.left - pRect.left) + 'px';
+    indicator.style.width = bRect.width + 'px';
+  }
+
+  function activate(btn){
+    btns.forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected','false'); });
+    btn.classList.add('active');
+    btn.setAttribute('aria-selected','true');
+    moveIndicator(btn);
+    const cut = btn.dataset.cut;
+    groups.forEach(g => g.classList.toggle('hidden', g.dataset.group !== cut));
+  }
+
+  btns.forEach(b => b.addEventListener('click', () => activate(b)));
+  const initial = document.querySelector('.cut-btn.active') || btns[0];
+  setTimeout(() => moveIndicator(initial), 60);
+  window.addEventListener('load', () => {
+    const active = document.querySelector('.cut-btn.active');
+    if (active) moveIndicator(active);
+  });
+  window.addEventListener('resize', () => {
+    const active = document.querySelector('.cut-btn.active');
+    if (active) moveIndicator(active);
+  });
+})();
+
+/* Flip cards */
+(function(){
+  document.querySelectorAll('.work-card').forEach(card => {
+    card.addEventListener('click', e => {
+      if (e.target.closest('a')) return;
+      card.classList.toggle('flipped');
+    });
+    card.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' '){
+        e.preventDefault();
+        card.classList.toggle('flipped');
+      }
+    });
+    card.setAttribute('tabindex','0');
+    card.setAttribute('role','button');
+    card.setAttribute('aria-label','Flip card for details');
+  });
+})();
+
+/* Drag to scroll stills */
+(function(){
+  const scroller = document.getElementById('stillsScroll');
+  if (!scroller) return;
+  let isDown = false, startX = 0, startL = 0;
+  scroller.addEventListener('mousedown', e => {
+    isDown = true;
+    scroller.style.scrollBehavior = 'auto';
+    startX = e.pageX - scroller.offsetLeft;
+    startL = scroller.scrollLeft;
+  });
+  ['mouseleave','mouseup'].forEach(ev => scroller.addEventListener(ev, () => { isDown = false; }));
+  scroller.addEventListener('mousemove', e => {
+    if (!isDown) return;
+    e.preventDefault();
+    const x = e.pageX - scroller.offsetLeft;
+    scroller.scrollLeft = startL - (x - startX) * 1.2;
+  });
+})();
+
+/* Smooth anchor scroll */
+(function(){
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const href = a.getAttribute('href');
+      if (href.length < 2) return;
+      const target = document.querySelector(href);
+      if (!target) return;
+      e.preventDefault();
+      target.scrollIntoView({behavior:'smooth', block:'start'});
+    });
+  });
+})();
+</script>
+</body>
+</html>

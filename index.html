@@ -1,0 +1,1862 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="Monika Ellingerová — CS student · UX/UI, film, AI, content, code." />
+<title>monika.exe — welcome</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Caveat:wght@400;600&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+<style>
+/* ============================================================
+   MONIKA.EXE · A Windows 7-inspired portfolio experience
+   ============================================================ */
+
+:root {
+  /* Win7 Aero sky palette */
+  --sky-top: #0a2d5c;
+  --sky-mid: #2a7fc4;
+  --sky-low: #8ccef4;
+  --sky-glow: #e8f5ff;
+
+  --aero-blue: #4fb1f5;
+  --aero-deep: #1e63a3;
+  --aero-teal: #1fd3d8;
+
+  /* accent rainbow (from the Win7 logo) */
+  --w-red:    #e84b3c;
+  --w-green:  #8cc73e;
+  --w-blue:   #2196f3;
+  --w-yellow: #ffc20e;
+
+  --ink: #0a1a2d;
+  --ink-dim: #4a5a72;
+  --ink-faint: #7a8ca4;
+  --ink-invert: #ffffff;
+
+  --glass: rgba(255,255,255,0.55);
+  --glass-stroke: rgba(255,255,255,0.75);
+  --glass-shadow: 0 18px 50px rgba(10,60,120,0.35), 0 0 0 1px rgba(0,40,100,0.25);
+
+  --radius-win: 8px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+  font-family: "Segoe UI", Inter, system-ui, -apple-system, sans-serif;
+  color: var(--ink);
+  background: #0a2d5c;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body.scroll-ok { overflow: auto; }
+
+img { display: block; max-width: 100%; }
+button { font: inherit; cursor: pointer; border: none; background: transparent; color: inherit; }
+a { color: inherit; text-decoration: none; }
+a.link { color: var(--aero-deep); text-decoration: underline; }
+
+/* ============================================================
+   BOOT SCREEN
+   ============================================================ */
+#boot {
+  position: fixed; inset: 0;
+  z-index: 9999;
+  display: grid;
+  place-items: center;
+  background: #000;
+  color: #fff;
+  transition: opacity 0.6s ease;
+}
+#boot.hide { opacity: 0; pointer-events: none; }
+.boot-inner {
+  text-align: center;
+  transform: translateY(-20px);
+  animation: bootFade 0.8s ease both;
+}
+.boot-logo {
+  width: 160px; height: 160px;
+  margin: 0 auto 28px;
+  position: relative;
+  animation: bootPulse 2.5s ease-in-out infinite;
+}
+.boot-flag { width: 100%; height: 100%; position: relative; transform: perspective(400px) rotateX(14deg) rotateY(-8deg); filter: drop-shadow(0 0 30px rgba(120,200,255,0.6)); }
+.boot-flag > i {
+  position: absolute;
+  width: 48%; height: 48%;
+  border-radius: 3px;
+  box-shadow: inset 0 0 12px rgba(255,255,255,0.4), 0 0 18px rgba(255,255,255,0.25);
+}
+.boot-flag .q1 { top: 0; left: 0;     background: linear-gradient(135deg, #ff8f6a, var(--w-red)); transform: skewX(-15deg) translateX(6px); }
+.boot-flag .q2 { top: 0; right: 0;    background: linear-gradient(135deg, #b0e25e, var(--w-green)); transform: skewX(-15deg) translateX(-2px); }
+.boot-flag .q3 { bottom: 0; left: 0;  background: linear-gradient(135deg, #6cc6ff, var(--w-blue)); transform: skewX(-15deg) translateX(6px); }
+.boot-flag .q4 { bottom: 0; right: 0; background: linear-gradient(135deg, #ffe16a, var(--w-yellow)); transform: skewX(-15deg) translateX(-2px); }
+
+.boot-text {
+  font-size: 28px;
+  font-weight: 300;
+  letter-spacing: 0.06em;
+  color: #cfe8ff;
+}
+.boot-text .dot-loader {
+  display: inline-block;
+  width: 1.2em;
+  text-align: left;
+  color: #9dd0ff;
+}
+.boot-sub {
+  margin-top: 14px;
+  font-size: 13px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #77a5cf;
+  font-family: "JetBrains Mono", monospace;
+}
+.boot-skip {
+  position: fixed;
+  bottom: 22px; right: 28px;
+  font-size: 12px;
+  color: rgba(255,255,255,0.5);
+  font-family: "JetBrains Mono", monospace;
+  letter-spacing: 0.1em;
+}
+.boot-skip kbd {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 4px;
+  border: 1px solid rgba(255,255,255,0.3);
+  background: rgba(255,255,255,0.08);
+  font-family: inherit;
+  color: #cfe8ff;
+}
+
+@keyframes bootFade { from { opacity: 0; transform: translateY(0); } to { opacity: 1; transform: translateY(-20px); } }
+@keyframes bootPulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.04); } }
+
+/* ============================================================
+   DESKTOP
+   ============================================================ */
+.desktop {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  user-select: none;
+}
+
+/* Wallpaper — Aero "Harmony" inspired */
+.wallpaper {
+  position: absolute; inset: 0;
+  background:
+    /* soft sun glow */
+    radial-gradient(ellipse at 72% 38%, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0) 35%),
+    /* clouds */
+    radial-gradient(ellipse 900px 280px at 20% 60%, rgba(255,255,255,0.35), transparent 60%),
+    radial-gradient(ellipse 600px 200px at 78% 78%, rgba(255,255,255,0.35), transparent 60%),
+    radial-gradient(ellipse 500px 160px at 88% 30%, rgba(255,255,255,0.30), transparent 60%),
+    /* main sky */
+    linear-gradient(180deg, #0a2d5c 0%, #1c5998 22%, #3a92d6 45%, #7bc0ee 72%, #bee2fa 100%);
+  z-index: 0;
+}
+.wallpaper::after {
+  content: "";
+  position: absolute; inset: 0;
+  background-image:
+    radial-gradient(circle at 12% 82%, rgba(255,255,255,0.12), transparent 40%),
+    radial-gradient(circle at 45% 90%, rgba(255,255,255,0.08), transparent 50%);
+  pointer-events: none;
+}
+
+/* Animated drifting cloud band */
+.clouds {
+  position: absolute;
+  top: 45%;
+  left: -20%;
+  width: 140%;
+  height: 30%;
+  background:
+    radial-gradient(ellipse 220px 70px at 12% 40%, rgba(255,255,255,0.5), transparent 65%),
+    radial-gradient(ellipse 300px 90px at 34% 60%, rgba(255,255,255,0.35), transparent 65%),
+    radial-gradient(ellipse 200px 60px at 56% 35%, rgba(255,255,255,0.4), transparent 65%),
+    radial-gradient(ellipse 280px 80px at 78% 55%, rgba(255,255,255,0.32), transparent 65%);
+  filter: blur(8px);
+  opacity: 0.7;
+  animation: drift 90s linear infinite;
+  z-index: 1;
+}
+@keyframes drift { to { transform: translateX(-20%); } }
+
+/* Brand watermark on wallpaper (like the WIN7 logo) */
+.brand-flag {
+  position: absolute;
+  top: 50%; right: 8%;
+  width: 360px; height: 360px;
+  transform: translate(0, -58%) perspective(700px) rotateX(14deg) rotateY(-8deg);
+  filter: drop-shadow(0 0 60px rgba(150,210,255,0.55));
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0.9;
+}
+.brand-flag i {
+  position: absolute;
+  width: 48%; height: 48%;
+  border-radius: 6px;
+  box-shadow:
+    inset 0 0 30px rgba(255,255,255,0.45),
+    inset 0 0 0 1px rgba(255,255,255,0.25),
+    0 0 25px rgba(255,255,255,0.18);
+}
+.brand-flag .q1 { top: 0; left: 0;     background: linear-gradient(135deg, #ff8f6a 0%, var(--w-red) 100%);   transform: skewX(-15deg) translateX(12px); }
+.brand-flag .q2 { top: 0; right: 0;    background: linear-gradient(135deg, #b9e670 0%, var(--w-green) 100%); transform: skewX(-15deg) translateX(-4px); }
+.brand-flag .q3 { bottom: 0; left: 0;  background: linear-gradient(135deg, #75c8ff 0%, var(--w-blue) 100%);  transform: skewX(-15deg) translateX(12px); }
+.brand-flag .q4 { bottom: 0; right: 0; background: linear-gradient(135deg, #ffeb7a 0%, var(--w-yellow) 100%); transform: skewX(-15deg) translateX(-4px); }
+.brand-flag .script {
+  position: absolute;
+  bottom: -60px; right: 0;
+  font-family: "Instrument Serif", serif;
+  font-style: italic;
+  font-size: 48px;
+  color: rgba(255,255,255,0.95);
+  text-shadow: 0 2px 30px rgba(0,40,100,0.5);
+  letter-spacing: 0.02em;
+}
+@media (max-width: 900px) {
+  .brand-flag { width: 200px; height: 200px; right: 4%; }
+  .brand-flag .script { font-size: 30px; bottom: -44px; }
+}
+
+/* ============================================================
+   DESKTOP ICONS
+   ============================================================ */
+.icons {
+  position: absolute;
+  top: 22px;
+  left: 22px;
+  z-index: 5;
+  display: grid;
+  grid-template-columns: 100px;
+  gap: 6px;
+  padding-bottom: 60px;
+}
+.icons.right {
+  left: auto; right: 22px;
+  text-align: right;
+  grid-template-columns: 100px;
+  justify-items: end;
+}
+.icon {
+  width: 100px;
+  padding: 10px 4px;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  text-align: center;
+  transition: background 0.12s;
+}
+.icon:hover { background: rgba(255,255,255,0.15); }
+.icon.active { background: rgba(120,180,240,0.35); outline: 1px dashed rgba(255,255,255,0.5); }
+.icon .icon-img {
+  width: 56px; height: 56px;
+  border-radius: 10px;
+  display: grid; place-items: center;
+  position: relative;
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,0.35));
+}
+.icon .icon-label {
+  font-size: 12px;
+  color: #fff;
+  font-weight: 500;
+  line-height: 1.2;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.6), 0 0 6px rgba(0,0,0,0.3);
+  max-width: 96px;
+  word-wrap: break-word;
+}
+
+/* Individual icon styles using pure CSS */
+.ic-about     { background: linear-gradient(135deg, #ffd3a0, #ff8a5b); border: 1px solid #ffb080; box-shadow: inset 0 1px 0 rgba(255,255,255,0.5); }
+.ic-skills    { background: linear-gradient(135deg, #ffe17e, #fcb022); border: 1px solid #ffc850; box-shadow: inset 0 1px 0 rgba(255,255,255,0.5); }
+.ic-gallery   { background: linear-gradient(135deg, #afe5ff, #4ea9ea); border: 1px solid #6cc0f0; box-shadow: inset 0 1px 0 rgba(255,255,255,0.5); }
+.ic-playing   { background: linear-gradient(135deg, #e1bbff, #8f5ae0); border: 1px solid #b48be8; box-shadow: inset 0 1px 0 rgba(255,255,255,0.5); }
+.ic-contact   { background: linear-gradient(135deg, #bff6d1, #4bbf7b); border: 1px solid #84d8a3; box-shadow: inset 0 1px 0 rgba(255,255,255,0.5); }
+.ic-resume    { background: linear-gradient(135deg, #ffffff, #c8d2e0); border: 1px solid #a0aec0; box-shadow: inset 0 1px 0 rgba(255,255,255,0.6); }
+.ic-recycle   { background: linear-gradient(135deg, #d5f2ff, #7fc8ee); border: 1px solid #a7d9f2; box-shadow: inset 0 1px 0 rgba(255,255,255,0.6); }
+
+.icon-glyph { color: rgba(10,30,60,0.75); filter: drop-shadow(0 1px 0 rgba(255,255,255,0.5)); }
+
+/* ============================================================
+   STICKY NOTE
+   ============================================================ */
+.sticky {
+  position: absolute;
+  right: 34px;
+  bottom: 90px;
+  width: 240px;
+  padding: 20px 18px 18px;
+  background: linear-gradient(180deg, #fff9a8 0%, #ffea5e 100%);
+  box-shadow:
+    0 20px 40px rgba(0,0,0,0.35),
+    0 2px 0 rgba(0,0,0,0.1) inset,
+    1px 1px 0 rgba(255,255,255,0.5) inset;
+  transform: rotate(-4deg);
+  font-family: "Caveat", cursive;
+  font-size: 18px;
+  color: #4a3500;
+  line-height: 1.35;
+  z-index: 4;
+  transition: transform 0.3s ease;
+}
+.sticky:hover { transform: rotate(-1deg) scale(1.03); }
+.sticky::before {
+  content: "";
+  position: absolute;
+  top: -8px; left: 50%;
+  transform: translateX(-50%);
+  width: 80px; height: 18px;
+  background: rgba(255,200,100,0.6);
+  border-radius: 2px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  backdrop-filter: blur(2px);
+}
+.sticky .sig {
+  display: block;
+  margin-top: 8px;
+  font-size: 22px;
+  text-align: right;
+  color: #6a4a00;
+}
+@media (max-width: 900px) { .sticky { display: none; } }
+
+/* ============================================================
+   TASKBAR
+   ============================================================ */
+.taskbar {
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  height: 44px;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding-right: 4px;
+  background:
+    linear-gradient(180deg,
+      rgba(110,160,210,0.65) 0%,
+      rgba(50,90,140,0.75) 22%,
+      rgba(30,60,100,0.85) 55%,
+      rgba(20,40,80,0.92) 100%);
+  backdrop-filter: blur(40px) saturate(160%);
+  -webkit-backdrop-filter: blur(40px) saturate(160%);
+  border-top: 1px solid rgba(255,255,255,0.45);
+  box-shadow: 0 -8px 30px rgba(0,30,70,0.4), inset 0 1px 0 rgba(255,255,255,0.3);
+}
+.taskbar::before {
+  /* subtle sheen stripe */
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 50%;
+  background: linear-gradient(180deg, rgba(255,255,255,0.22), rgba(255,255,255,0.02));
+  pointer-events: none;
+}
+
+/* Start button */
+.start-btn {
+  position: relative;
+  width: 58px; height: 56px;
+  margin: -12px 2px -12px 2px;
+  display: grid; place-items: center;
+  transition: filter 0.15s;
+}
+.start-btn:hover { filter: brightness(1.1); }
+.start-btn.active { filter: brightness(1.2); }
+.start-btn .orb {
+  width: 46px; height: 46px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 32% 30%, #ffffff 0%, #8ecaff 12%, #4ea0e2 35%, #1f63a5 70%, #0e3a6e 100%);
+  box-shadow:
+    0 0 24px rgba(120,200,255,0.7),
+    inset 0 -4px 12px rgba(0,20,50,0.5),
+    inset 0 4px 8px rgba(255,255,255,0.4);
+  position: relative;
+}
+.start-btn .orb::before {
+  content: "";
+  position: absolute;
+  top: 12%; left: 18%;
+  width: 60%; height: 30%;
+  background: radial-gradient(ellipse, rgba(255,255,255,0.85), transparent 70%);
+  border-radius: 50%;
+  filter: blur(1px);
+}
+.start-btn .flag {
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 20px; height: 20px;
+  transform: translate(-50%, -50%) perspective(80px) rotateX(12deg);
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.5));
+}
+.start-btn .flag i {
+  position: absolute; width: 48%; height: 48%; border-radius: 1.5px;
+  box-shadow: inset 0 0 2px rgba(255,255,255,0.6);
+}
+.start-btn .flag .q1 { top: 0; left: 0;     background: #ffd9c6; transform: skewX(-18deg) translateX(1.2px); }
+.start-btn .flag .q2 { top: 0; right: 0;    background: #d8f2a5; transform: skewX(-18deg); }
+.start-btn .flag .q3 { bottom: 0; left: 0;  background: #b3def5; transform: skewX(-18deg) translateX(1.2px); }
+.start-btn .flag .q4 { bottom: 0; right: 0; background: #fff0a5; transform: skewX(-18deg); }
+
+/* Taskbar pinned / opened apps */
+.task-apps {
+  display: flex;
+  gap: 2px;
+  margin-left: 4px;
+  flex: 1;
+  min-width: 0;
+}
+.task-app {
+  height: 34px;
+  padding: 0 12px;
+  min-width: 40px;
+  display: flex; align-items: center; gap: 8px;
+  border-radius: 4px;
+  color: #fff;
+  font-size: 12px;
+  border: 1px solid transparent;
+  background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+  transition: background 0.15s, border-color 0.15s;
+  white-space: nowrap;
+}
+.task-app:hover { background: linear-gradient(180deg, rgba(255,255,255,0.25), rgba(255,255,255,0.08)); border-color: rgba(255,255,255,0.35); }
+.task-app.active {
+  background: linear-gradient(180deg, rgba(120,180,240,0.45), rgba(40,100,160,0.5));
+  border-color: rgba(150,210,255,0.7);
+  box-shadow: inset 0 0 12px rgba(120,200,255,0.4);
+}
+.task-app .dot { width: 10px; height: 10px; border-radius: 2px; background: #8ccef4; box-shadow: inset 0 0 2px rgba(0,0,0,0.3); }
+
+/* System tray */
+.tray {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding-left: 8px;
+  border-left: 1px solid rgba(255,255,255,0.2);
+  height: 100%;
+}
+.tray-icon {
+  width: 22px; height: 22px;
+  color: rgba(255,255,255,0.9);
+  display: grid; place-items: center;
+  filter: drop-shadow(0 1px 1px rgba(0,0,0,0.4));
+  border-radius: 3px;
+  transition: background 0.15s;
+}
+.tray-icon:hover { background: rgba(255,255,255,0.12); }
+.clock {
+  min-width: 68px;
+  padding: 0 10px;
+  font-size: 11px;
+  line-height: 1.25;
+  color: #fff;
+  text-align: center;
+  text-shadow: 0 1px 1px rgba(0,0,0,0.5);
+}
+.show-desktop {
+  width: 10px;
+  align-self: stretch;
+  margin-left: 4px;
+  border-left: 1px solid rgba(255,255,255,0.35);
+  background: linear-gradient(180deg, rgba(255,255,255,0.05), transparent);
+  transition: background 0.15s;
+}
+.show-desktop:hover { background: rgba(255,255,255,0.2); }
+
+/* ============================================================
+   START MENU
+   ============================================================ */
+.start-menu {
+  position: fixed;
+  left: 2px; bottom: 48px;
+  width: 520px; max-width: calc(100vw - 12px);
+  height: 520px; max-height: calc(100vh - 60px);
+  z-index: 250;
+  border-radius: 8px 8px 4px 4px;
+  background: linear-gradient(180deg,
+    rgba(230,242,255,0.88) 0%,
+    rgba(180,215,245,0.85) 50%,
+    rgba(220,238,255,0.92) 100%);
+  backdrop-filter: blur(40px) saturate(170%);
+  -webkit-backdrop-filter: blur(40px) saturate(170%);
+  border: 1px solid rgba(255,255,255,0.7);
+  box-shadow: 0 20px 60px rgba(0,30,80,0.5), inset 0 1px 0 rgba(255,255,255,0.9);
+  display: none;
+  overflow: hidden;
+  font-size: 13px;
+}
+.start-menu.open { display: grid; grid-template-columns: 1fr 200px; animation: menuIn 0.22s ease both; }
+@keyframes menuIn { from { opacity: 0; transform: translateY(12px) scale(0.98); } to { opacity: 1; transform: none; } }
+.start-left { padding: 14px 10px 44px; display: flex; flex-direction: column; gap: 2px; position: relative; }
+.start-right {
+  background: linear-gradient(180deg, rgba(60,130,200,0.12) 0%, rgba(40,90,160,0.2) 100%);
+  border-left: 1px solid rgba(255,255,255,0.6);
+  padding: 14px 12px 44px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  position: relative;
+}
+.start-user {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(0,60,130,0.15);
+  margin-bottom: 8px;
+}
+.start-avatar {
+  width: 58px; height: 58px;
+  border-radius: 6px;
+  background-image: url(images/me.jpg);
+  background-size: cover;
+  background-position: center;
+  border: 2px solid rgba(255,255,255,0.8);
+  box-shadow: 0 3px 10px rgba(0,20,50,0.35);
+}
+.start-user .name { margin-top: 6px; font-weight: 500; color: #0a2d5c; }
+.start-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 10px;
+  border-radius: 4px;
+  font-size: 13px;
+  color: #0a2d5c;
+  transition: background 0.12s, color 0.12s;
+  text-align: left;
+  width: 100%;
+}
+.start-item:hover { background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(180,220,255,0.6)); }
+.start-item .mi {
+  width: 26px; height: 26px;
+  border-radius: 4px;
+  display: grid; place-items: center;
+  flex-shrink: 0;
+}
+.start-search {
+  position: absolute;
+  left: 10px; right: 10px;
+  bottom: 8px;
+  height: 26px;
+  border-radius: 14px;
+  background: rgba(255,255,255,0.7);
+  border: 1px solid rgba(0,60,130,0.25);
+  padding: 0 12px;
+  font-size: 12px;
+  color: var(--ink-dim);
+  display: flex; align-items: center; gap: 6px;
+}
+.start-shutdown {
+  position: absolute;
+  right: 12px; bottom: 10px;
+  padding: 6px 14px;
+  border-radius: 4px;
+  background: linear-gradient(180deg, #e9f2fa, #b7d1e8);
+  border: 1px solid rgba(0,60,130,0.4);
+  color: #0a2d5c;
+  font-size: 12px;
+  font-weight: 500;
+}
+.start-item .mi.red    { background: linear-gradient(135deg, #ffb9a3, #e84b3c); color: #fff; }
+.start-item .mi.green  { background: linear-gradient(135deg, #c6e885, #8cc73e); color: #fff; }
+.start-item .mi.blue   { background: linear-gradient(135deg, #86c9f5, #2196f3); color: #fff; }
+.start-item .mi.yellow { background: linear-gradient(135deg, #ffe27e, #ffc20e); color: #4a3500; }
+.start-item .mi.purple { background: linear-gradient(135deg, #cfa9ee, #8f5ae0); color: #fff; }
+.start-item .mi.gray   { background: linear-gradient(135deg, #e6ebf2, #a0aec0); color: #0a2d5c; }
+
+/* ============================================================
+   WINDOWS (Aero Glass)
+   ============================================================ */
+.window {
+  position: absolute;
+  min-width: 320px;
+  background: linear-gradient(180deg,
+    rgba(210,230,250,0.78) 0%,
+    rgba(170,205,240,0.72) 35%,
+    rgba(220,235,250,0.75) 100%);
+  backdrop-filter: blur(40px) saturate(160%);
+  -webkit-backdrop-filter: blur(40px) saturate(160%);
+  border: 1px solid rgba(255,255,255,0.85);
+  border-radius: 8px;
+  box-shadow:
+    0 26px 70px rgba(0,30,80,0.45),
+    0 0 0 1px rgba(30,100,180,0.3),
+    inset 0 1px 0 rgba(255,255,255,0.9);
+  z-index: 20;
+  display: none;
+  flex-direction: column;
+  overflow: hidden;
+  transform-origin: center bottom;
+}
+.window.open { display: flex; animation: winOpen 0.28s cubic-bezier(.22,.61,.36,1) both; }
+.window.closing { animation: winClose 0.22s ease-in both; }
+.window.focus { z-index: 30; }
+.window.max { border-radius: 0 !important; }
+
+@keyframes winOpen {
+  from { opacity: 0; transform: scale(0.82) translateY(40px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes winClose {
+  from { opacity: 1; transform: none; }
+  to { opacity: 0; transform: scale(0.88) translateY(30px); }
+}
+
+/* Title bar */
+.titlebar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 4px 0 10px;
+  height: 34px;
+  background: linear-gradient(180deg,
+    rgba(255,255,255,0.6) 0%,
+    rgba(235,245,255,0.35) 50%,
+    rgba(200,225,245,0.25) 100%);
+  border-bottom: 1px solid rgba(255,255,255,0.5);
+  cursor: grab;
+  color: #0a2d5c;
+  font-size: 13px;
+  font-weight: 500;
+  user-select: none;
+}
+.titlebar:active { cursor: grabbing; }
+.titlebar .fav {
+  width: 18px; height: 18px;
+  border-radius: 3px;
+  display: grid; place-items: center;
+  flex-shrink: 0;
+  font-size: 11px;
+  color: #fff;
+}
+.titlebar .title { flex: 1; text-shadow: 0 1px 0 rgba(255,255,255,0.7); }
+.titlebar .controls { display: flex; gap: 1px; margin: -1px -3px 0 0; }
+.tbtn {
+  width: 42px; height: 26px;
+  margin-top: 0;
+  border-radius: 0 0 3px 3px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.55), rgba(255,255,255,0.15));
+  border: 1px solid rgba(255,255,255,0.5);
+  border-top: none;
+  color: #0a2d5c;
+  display: grid; place-items: center;
+  transition: background 0.12s, color 0.12s;
+}
+.tbtn:hover { background: linear-gradient(180deg, rgba(255,255,255,0.85), rgba(180,220,255,0.6)); }
+.tbtn.close {
+  width: 50px;
+  border-radius: 0 7px 3px 3px;
+  background: linear-gradient(180deg, #ff8f75, #c93722 60%, #a01d0c);
+  color: #fff;
+  border-color: rgba(255,255,255,0.4);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.3);
+}
+.tbtn.close:hover { background: linear-gradient(180deg, #ffa590, #db4532 60%, #b52818); }
+
+/* Address / toolbar under titlebar */
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.4), rgba(210,230,248,0.2));
+  border-bottom: 1px solid rgba(255,255,255,0.5);
+  font-size: 12px;
+  color: var(--ink-dim);
+}
+.toolbar .addr {
+  flex: 1;
+  padding: 4px 10px;
+  background: rgba(255,255,255,0.7);
+  border: 1px solid rgba(0,60,130,0.25);
+  border-radius: 3px;
+  font-family: "Segoe UI", sans-serif;
+  color: #0a2d5c;
+}
+.toolbar .addr .crumb { color: var(--ink-dim); }
+.toolbar .addr .crumb + .crumb::before { content: " › "; color: var(--ink-faint); }
+
+/* Window body */
+.window-body {
+  flex: 1;
+  overflow: auto;
+  padding: 22px 26px 26px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.35), rgba(240,248,255,0.35));
+  color: var(--ink);
+}
+.window-body h2 {
+  font-family: "Segoe UI", Inter, sans-serif;
+  font-weight: 300;
+  font-size: 28px;
+  color: #0a2d5c;
+  margin-bottom: 4px;
+  letter-spacing: -0.01em;
+}
+.window-body h2 em {
+  font-family: "Instrument Serif", serif;
+  font-style: italic;
+  color: #2a7fc4;
+  font-weight: 400;
+}
+.window-body h3 {
+  font-weight: 500;
+  font-size: 15px;
+  color: #0a2d5c;
+  margin: 14px 0 6px;
+}
+.window-body p {
+  font-size: 14px;
+  line-height: 1.55;
+  color: #1a2c44;
+  margin-bottom: 10px;
+}
+.window-body .lead {
+  font-size: 15px;
+  color: #1a2c44;
+  line-height: 1.55;
+  margin-bottom: 16px;
+}
+.window-body ul { padding-left: 18px; margin-bottom: 10px; }
+.window-body li { font-size: 14px; color: #1a2c44; line-height: 1.6; }
+.win-subtitle {
+  font-size: 12px;
+  color: var(--ink-dim);
+  margin-bottom: 18px;
+}
+
+/* ============================================================
+   WINDOW CONTENT BLOCKS
+   ============================================================ */
+
+/* About window */
+.about-grid {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 22px;
+  margin-top: 6px;
+}
+@media (max-width: 720px) { .about-grid { grid-template-columns: 1fr; } }
+
+.about-card {
+  background: linear-gradient(180deg, rgba(255,255,255,0.65), rgba(210,230,250,0.55));
+  border: 1px solid rgba(255,255,255,0.9);
+  border-radius: 6px;
+  padding: 16px;
+  box-shadow: 0 6px 18px rgba(0,30,80,0.15), inset 0 1px 0 rgba(255,255,255,0.9);
+}
+.about-avatar {
+  width: 100%; aspect-ratio: 3/4;
+  background-image: url(images/me.jpg);
+  background-size: cover; background-position: center;
+  border-radius: 4px;
+  border: 1px solid rgba(255,255,255,0.9);
+  box-shadow: 0 4px 14px rgba(0,30,80,0.25);
+  margin-bottom: 10px;
+}
+.about-card .stat-row {
+  display: flex; justify-content: space-between;
+  font-size: 12px;
+  padding: 4px 0;
+  border-bottom: 1px dashed rgba(0,60,130,0.2);
+}
+.about-card .stat-row:last-child { border-bottom: none; }
+.about-card .stat-row .k { color: var(--ink-dim); }
+.about-card .stat-row .v { font-weight: 500; color: #0a2d5c; }
+
+.about-text p em, .about-text em {
+  font-family: "Instrument Serif", serif;
+  font-style: italic;
+  color: #2a7fc4;
+}
+
+.callout {
+  margin-top: 14px;
+  padding: 12px 14px;
+  background: linear-gradient(180deg, rgba(255,242,200,0.85), rgba(255,215,120,0.65));
+  border: 1px solid rgba(200,150,0,0.4);
+  border-radius: 6px;
+  font-size: 13px;
+  color: #4a3500;
+  display: flex; gap: 10px;
+}
+.callout .bolt { font-size: 18px; line-height: 1; flex-shrink: 0; }
+
+/* Skills window */
+.skills-toolbar {
+  display: flex; gap: 8px;
+  padding: 6px 10px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.4), rgba(210,230,248,0.2));
+  border-bottom: 1px solid rgba(255,255,255,0.5);
+  font-size: 12px;
+  color: var(--ink-dim);
+  margin: -22px -26px 16px;
+}
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+@media (max-width: 820px) { .skills-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 520px) { .skills-grid { grid-template-columns: 1fr; } }
+
+.skill {
+  background: linear-gradient(180deg, rgba(255,255,255,0.75), rgba(210,230,250,0.6));
+  border: 1px solid rgba(255,255,255,0.9);
+  border-radius: 6px;
+  padding: 16px;
+  box-shadow: 0 6px 18px rgba(0,30,80,0.15), inset 0 1px 0 rgba(255,255,255,0.95);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  position: relative;
+}
+.skill:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px rgba(30,100,180,0.3), 0 0 0 1px rgba(80,160,240,0.4);
+}
+.skill .tile {
+  width: 46px; height: 46px;
+  border-radius: 8px;
+  display: grid; place-items: center;
+  color: #fff;
+  margin-bottom: 10px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.5), 0 2px 8px rgba(0,30,80,0.25);
+}
+.skill .t-red    { background: linear-gradient(135deg, #ff8f75, #e84b3c); }
+.skill .t-green  { background: linear-gradient(135deg, #b9e670, #68a635); }
+.skill .t-blue   { background: linear-gradient(135deg, #86c9f5, #2196f3); }
+.skill .t-yellow { background: linear-gradient(135deg, #ffe27e, #ffc20e); color: #4a3500; }
+.skill .t-purple { background: linear-gradient(135deg, #cfa9ee, #8f5ae0); }
+.skill .t-teal   { background: linear-gradient(135deg, #8ae4e4, #1fd3d8); }
+.skill h3 { font-size: 15px; font-weight: 500; color: #0a2d5c; margin-bottom: 4px; }
+.skill p { font-size: 12.5px; color: #36496a; line-height: 1.5; margin: 0; }
+.skill .tags { margin-top: 10px; display: flex; flex-wrap: wrap; gap: 4px; }
+.skill .tag {
+  font-size: 10px;
+  padding: 2px 7px;
+  border-radius: 3px;
+  background: rgba(30,100,180,0.12);
+  color: #1e63a3;
+  border: 1px solid rgba(30,100,180,0.18);
+  letter-spacing: 0.02em;
+}
+
+/* Gallery window */
+.gallery-toolbar {
+  display: flex; align-items: center; gap: 10px;
+  margin: -22px -26px 14px;
+  padding: 6px 14px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.4), rgba(210,230,248,0.2));
+  border-bottom: 1px solid rgba(255,255,255,0.5);
+  font-size: 12px;
+  color: var(--ink-dim);
+}
+.gallery-toolbar .view-toggle {
+  margin-left: auto;
+  display: flex; gap: 2px;
+}
+.gallery-toolbar .vt-btn {
+  padding: 3px 8px;
+  border-radius: 3px;
+  border: 1px solid transparent;
+}
+.gallery-toolbar .vt-btn.on {
+  background: rgba(30,100,180,0.15);
+  border-color: rgba(30,100,180,0.35);
+  color: #1e63a3;
+}
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+@media (max-width: 820px) { .gallery-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 520px) { .gallery-grid { grid-template-columns: 1fr; } }
+
+.photo {
+  position: relative;
+  border-radius: 6px;
+  overflow: hidden;
+  aspect-ratio: 1/1;
+  background: #b7d1e8;
+  border: 1px solid rgba(255,255,255,0.9);
+  box-shadow: 0 6px 16px rgba(0,30,80,0.25);
+  cursor: pointer;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.photo:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 12px 26px rgba(30,100,180,0.35); }
+.photo img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+.photo:hover img { transform: scale(1.04); }
+.photo .meta {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  padding: 14px 10px 8px;
+  background: linear-gradient(180deg, transparent, rgba(10,30,60,0.75));
+  color: #fff;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 500;
+  display: flex; justify-content: space-between;
+}
+.photo .kind { color: #8ccef4; }
+
+/* photo wide/tall */
+.photo.wide { grid-column: span 2; aspect-ratio: 2/1; }
+.photo.tall { grid-row: span 2; aspect-ratio: 1/2; }
+@media (max-width: 520px) {
+  .photo, .photo.wide, .photo.tall { grid-column: span 1; grid-row: span 1; aspect-ratio: 1/1; }
+}
+
+/* Now Playing */
+.np-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+@media (max-width: 720px) { .np-grid { grid-template-columns: 1fr; } }
+.np-card {
+  background: linear-gradient(180deg, rgba(255,255,255,0.7), rgba(210,230,250,0.6));
+  border: 1px solid rgba(255,255,255,0.9);
+  border-radius: 6px;
+  padding: 16px;
+  box-shadow: 0 6px 18px rgba(0,30,80,0.15), inset 0 1px 0 rgba(255,255,255,0.95);
+}
+.np-card h3 {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #2a7fc4;
+  margin: 0 0 10px;
+}
+.np-card h3 .chip {
+  display: inline-block;
+  width: 8px; height: 8px;
+  border-radius: 2px;
+}
+.np-row { font-size: 13px; padding: 6px 0; border-bottom: 1px dashed rgba(0,60,130,0.18); display: flex; justify-content: space-between; gap: 8px; }
+.np-row:last-child { border: none; }
+.np-row .thing { color: #0a2d5c; font-weight: 500; }
+.np-row .sub { color: var(--ink-dim); font-size: 12px; }
+
+/* Contact */
+.contact-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 30px 0 10px;
+}
+.contact-wrap h2 { font-size: 32px; font-weight: 300; }
+.contact-wrap p { max-width: 460px; margin: 8px auto 20px; }
+.contact-wrap .buttons { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+.aero-btn {
+  display: inline-flex;
+  align-items: center; gap: 8px;
+  padding: 9px 16px;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #0a2d5c;
+  background: linear-gradient(180deg, #ffffff 0%, #d9e8f5 100%);
+  border: 1px solid rgba(30,100,180,0.35);
+  box-shadow: 0 2px 0 rgba(255,255,255,0.6) inset, 0 4px 10px rgba(0,30,80,0.15);
+  transition: background 0.15s, transform 0.1s;
+}
+.aero-btn:hover {
+  background: linear-gradient(180deg, #ffffff 0%, #bfd8ed 100%);
+  box-shadow: 0 0 0 2px rgba(80,160,240,0.4), 0 4px 12px rgba(0,30,80,0.2);
+}
+.aero-btn:active { transform: translateY(1px); }
+.aero-btn.primary {
+  background: linear-gradient(180deg, #4fb1f5 0%, #1e63a3 100%);
+  color: #fff;
+  border-color: #1a4d7d;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.45), 0 4px 14px rgba(30,100,180,0.4);
+}
+.aero-btn.primary:hover {
+  background: linear-gradient(180deg, #6bc0ff 0%, #2a7fc4 100%);
+}
+
+/* Resume list */
+.resume-content ul { padding-left: 0; list-style: none; }
+.resume-content li {
+  padding: 10px 0;
+  border-bottom: 1px dashed rgba(0,60,130,0.18);
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: 14px;
+  font-size: 13.5px;
+}
+.resume-content li:last-child { border: none; }
+.resume-content li .year { color: var(--ink-dim); font-family: "JetBrains Mono", monospace; font-size: 12px; }
+.resume-content li .what { color: #0a2d5c; font-weight: 500; }
+.resume-content li .what span { display: block; font-weight: 400; color: #36496a; margin-top: 2px; font-size: 12.5px; }
+
+/* ============================================================
+   LIGHTBOX
+   ============================================================ */
+.lightbox {
+  position: fixed; inset: 0;
+  z-index: 900;
+  display: none;
+  align-items: center; justify-content: center;
+  background: rgba(5,15,35,0.7);
+  backdrop-filter: blur(10px);
+  animation: lbIn 0.25s ease both;
+}
+.lightbox.open { display: flex; }
+@keyframes lbIn { from { opacity: 0; } to { opacity: 1; } }
+.lb-inner {
+  position: relative;
+  max-width: 92vw; max-height: 90vh;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.6);
+  background: #0a2d5c;
+}
+.lb-inner img { max-width: 92vw; max-height: 90vh; object-fit: contain; }
+.lb-close {
+  position: absolute;
+  top: 10px; right: 10px;
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  background: rgba(200,40,20,0.9);
+  color: #fff;
+  display: grid; place-items: center;
+  border: 1px solid rgba(255,255,255,0.3);
+  z-index: 2;
+}
+.lb-cap {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  padding: 10px 16px;
+  background: linear-gradient(180deg, transparent, rgba(0,0,0,0.7));
+  color: #fff; font-size: 13px;
+}
+
+/* ============================================================
+   CURSOR TRAIL (subtle)
+   ============================================================ */
+.trail {
+  position: fixed;
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(140,206,244,0.7), rgba(140,206,244,0) 70%);
+  pointer-events: none;
+  z-index: 9000;
+  transform: translate(-50%, -50%);
+  animation: trailFade 0.6s ease forwards;
+}
+@keyframes trailFade { to { opacity: 0; transform: translate(-50%, -50%) scale(2); } }
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 900px) {
+  .icons { grid-template-columns: repeat(auto-fill, 90px); top: 10px; left: 10px; right: 120px; }
+  .icons.right { display: none; }
+  .icon { width: 90px; }
+  .window { width: calc(100vw - 20px) !important; left: 10px !important; top: 10px !important; max-height: calc(100vh - 80px); }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ============================================================
+     BOOT SCREEN
+     ============================================================ -->
+<div id="boot" role="status" aria-live="polite">
+  <div class="boot-inner">
+    <div class="boot-logo">
+      <div class="boot-flag">
+        <i class="q1"></i><i class="q2"></i><i class="q3"></i><i class="q4"></i>
+      </div>
+    </div>
+    <div class="boot-text">Starting monika<span class="dot-loader">.</span></div>
+    <div class="boot-sub">v2026.04 · PRAGUE BUILD</div>
+  </div>
+  <div class="boot-skip">press <kbd>any key</kbd> to enter</div>
+</div>
+
+<!-- ============================================================
+     DESKTOP
+     ============================================================ -->
+<div class="desktop" id="desktop">
+
+  <div class="wallpaper"></div>
+  <div class="clouds"></div>
+
+  <!-- Big vibe logo -->
+  <div class="brand-flag" aria-hidden="true">
+    <i class="q1"></i><i class="q2"></i><i class="q3"></i><i class="q4"></i>
+    <div class="script">monika</div>
+  </div>
+
+  <!-- LEFT ICONS -->
+  <div class="icons">
+    <button class="icon" data-open="about">
+      <div class="icon-img ic-about">
+        <svg width="28" height="28" viewBox="0 0 24 24" class="icon-glyph"><circle cx="12" cy="8" r="4" fill="currentColor"/><path d="M4 20c0-4.4 3.6-8 8-8s8 3.6 8 8" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+      </div>
+      <div class="icon-label">About Me</div>
+    </button>
+
+    <button class="icon" data-open="skills">
+      <div class="icon-img ic-skills">
+        <svg width="28" height="28" viewBox="0 0 24 24" class="icon-glyph"><path d="M13 2L4 14h7l-1 8 9-12h-7l1-8z" fill="currentColor"/></svg>
+      </div>
+      <div class="icon-label">Skills.dll</div>
+    </button>
+
+    <button class="icon" data-open="gallery">
+      <div class="icon-img ic-gallery">
+        <svg width="28" height="28" viewBox="0 0 24 24" class="icon-glyph"><path d="M3 5h18v14H3z" stroke="currentColor" stroke-width="2" fill="none"/><circle cx="8.5" cy="10" r="1.5" fill="currentColor"/><path d="M4 17l5-5 4 4 3-3 4 5" stroke="currentColor" stroke-width="2" fill="none" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="icon-label">Life Gallery</div>
+    </button>
+
+    <button class="icon" data-open="playing">
+      <div class="icon-img ic-playing">
+        <svg width="28" height="28" viewBox="0 0 24 24" class="icon-glyph"><path d="M9 18V6l10-2v12" stroke="currentColor" stroke-width="2" fill="none" stroke-linejoin="round"/><circle cx="7" cy="18" r="2.5" fill="currentColor"/><circle cx="17" cy="16" r="2.5" fill="currentColor"/></svg>
+      </div>
+      <div class="icon-label">Now Playing</div>
+    </button>
+
+    <button class="icon" data-open="resume">
+      <div class="icon-img ic-resume">
+        <svg width="28" height="28" viewBox="0 0 24 24" class="icon-glyph"><path d="M6 3h8l4 4v14H6z" stroke="currentColor" stroke-width="2" fill="none" stroke-linejoin="round"/><path d="M14 3v4h4M8 12h8M8 16h8M8 8h3" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+      </div>
+      <div class="icon-label">Résumé.txt</div>
+    </button>
+
+    <button class="icon" data-open="contact">
+      <div class="icon-img ic-contact">
+        <svg width="28" height="28" viewBox="0 0 24 24" class="icon-glyph"><path d="M3 6h18v12H3z" stroke="currentColor" stroke-width="2" fill="none"/><path d="M3 7l9 6 9-6" stroke="currentColor" stroke-width="2" fill="none" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="icon-label">Contact.app</div>
+    </button>
+  </div>
+
+  <!-- RIGHT ICONS (decorative) -->
+  <div class="icons right">
+    <button class="icon" onclick="alert('Good things are on their way.')">
+      <div class="icon-img ic-recycle">
+        <svg width="28" height="28" viewBox="0 0 24 24" class="icon-glyph"><path d="M5 7h14l-1 14H6z" stroke="currentColor" stroke-width="2" fill="none" stroke-linejoin="round"/><path d="M9 11v6M15 11v6M3 7h18M9 4h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </div>
+      <div class="icon-label">Recycle Bin</div>
+    </button>
+  </div>
+
+  <!-- Sticky note -->
+  <div class="sticky">
+    hi! you've reached<br>
+    my desktop 🩵<br>
+    click around —<br>
+    this is my world.
+    <span class="sig">— m.</span>
+  </div>
+
+  <!-- ============================================================
+       WINDOWS
+       ============================================================ -->
+
+  <!-- ABOUT -->
+  <div class="window" data-window="about" style="width: 780px; height: 540px; top: 70px; left: 150px;">
+    <div class="titlebar" data-drag>
+      <div class="fav" style="background: linear-gradient(135deg,#ff8f6a,#e84b3c)">
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4.4 3.6-8 8-8s8 3.6 8 8" stroke="currentColor" stroke-width="3" fill="none"/></svg>
+      </div>
+      <div class="title">About — monika.me</div>
+      <div class="controls">
+        <button class="tbtn min" title="Minimize">–</button>
+        <button class="tbtn max" title="Maximize">☐</button>
+        <button class="tbtn close" title="Close">✕</button>
+      </div>
+    </div>
+    <div class="toolbar">
+      <span class="addr">
+        <span class="crumb">Computer</span><span class="crumb">monika (C:)</span><span class="crumb">About</span>
+      </span>
+    </div>
+    <div class="window-body">
+      <h2>Hi, I'm <em>Monika</em>.</h2>
+      <div class="win-subtitle">File: about.txt · Last modified: today</div>
+
+      <div class="about-grid">
+        <div class="about-card">
+          <div class="about-avatar"></div>
+          <div class="stat-row"><span class="k">Name</span><span class="v">Monika Ellingerová</span></div>
+          <div class="stat-row"><span class="k">Age</span><span class="v">23</span></div>
+          <div class="stat-row"><span class="k">City</span><span class="v">Czech Republic</span></div>
+          <div class="stat-row"><span class="k">Studies</span><span class="v">Computer Science</span></div>
+          <div class="stat-row"><span class="k">Status</span><span class="v">🟢 Open to work</span></div>
+          <div class="stat-row"><span class="k">Dream</span><span class="v">Film industry</span></div>
+        </div>
+
+        <div class="about-text">
+          <p class="lead">
+            I'm a computer science student with a strong love for creativity, whether it's painting, reading, writing, or creating content. I love bringing that creativity into my work, blending it with development to build thoughtful UX/UI and engaging web and app experiences.
+          </p>
+          <p>
+            I live in the Czech Republic, and constantly trying new hobbies. I love sports, exploring new tech, and letting creative projects give my brain a break.
+          </p>
+          <p>
+            My dream has always been working in the film industry, and I'm actively seeking opportunities to break in. I think in shots and beats, and I love crafting visual stories — whether it's a slick product interface or a short film.
+          </p>
+
+          <div class="callout">
+            <span class="bolt">✨</span>
+            <div><strong>Fun fact:</strong> I'm a big reader. My all-time favourite book and film series is The Hunger Games. Most recent favourite books are the Throne of Glass series and The Invisible Life of Addie LaRue. I ski better than I cook, and I never say no to a new adventure.</div>
+          </div>
+
+          <h3>What I'm like to work with</h3>
+          <ul>
+            <li><strong>Taste-first.</strong> I'd rather ship three well-crafted things than thirty ugly ones.</li>
+            <li><strong>Fast iterator.</strong> I prototype, react to it, throw half away, rebuild.</li>
+            <li><strong>Calm under pressure.</strong> Last-minute deadlines energize me, not freak me out.</li>
+            <li><strong>Good vibes.</strong> Life's too short for toxic meetings.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SKILLS -->
+  <div class="window" data-window="skills" style="width: 820px; height: 560px; top: 110px; left: 210px;">
+    <div class="titlebar" data-drag>
+      <div class="fav" style="background: linear-gradient(135deg,#ffe27e,#ffc20e);color:#4a3500">
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M13 2L4 14h7l-1 8 9-12h-7l1-8z"/></svg>
+      </div>
+      <div class="title">Skills — monika.dll</div>
+      <div class="controls">
+        <button class="tbtn min">–</button>
+        <button class="tbtn max">☐</button>
+        <button class="tbtn close">✕</button>
+      </div>
+    </div>
+    <div class="toolbar">
+      <span class="addr">
+        <span class="crumb">Computer</span><span class="crumb">monika (C:)</span><span class="crumb">System32</span><span class="crumb">Skills</span>
+      </span>
+    </div>
+    <div class="window-body">
+      <h2>Things I <em>actually</em> do.</h2>
+      <p class="win-subtitle">6 modules loaded · status: all running hot</p>
+
+      <div class="skills-grid">
+        <article class="skill">
+          <div class="tile t-blue">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="12" height="12" rx="2" stroke="currentColor" stroke-width="2"/><rect x="9" y="9" width="12" height="12" rx="2" stroke="currentColor" stroke-width="2"/></svg>
+          </div>
+          <h3>UX / UI Design</h3>
+          <p>Interfaces that feel obvious the moment you touch them. Research → wireframes → systems → pixel-polished screens in Figma.</p>
+          <div class="tags"><span class="tag">Figma</span><span class="tag">Design Systems</span><span class="tag">Prototyping</span></div>
+        </article>
+
+        <article class="skill">
+          <div class="tile t-red">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M4 8h3l2-3h6l2 3h3v11H4z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="12" cy="13" r="3.2" stroke="currentColor" stroke-width="2"/></svg>
+          </div>
+          <h3>Content Creation</h3>
+          <p>Short-form video, editorial photography, visual narratives — shot, cut, graded. Sharp eye for what actually stops the scroll.</p>
+          <div class="tags"><span class="tag">Premiere</span><span class="tag">Photography</span><span class="tag">Storyboarding</span></div>
+        </article>
+
+        <article class="skill">
+          <div class="tile t-purple">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M3 9l3-5 4 2 3-3 4 2 3-3 1.5 3L3 9z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><rect x="3" y="9" width="18" height="11" rx="1.5" stroke="currentColor" stroke-width="2"/></svg>
+          </div>
+          <h3>Film Industry</h3>
+          <p>On set, in the edit bay, or writing the deck. I think in shots and beats — commercials, music videos, short film, branded content.</p>
+          <div class="tags"><span class="tag">Directing</span><span class="tag">Editing</span><span class="tag">Color</span></div>
+        </article>
+
+        <article class="skill">
+          <div class="tile t-green">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M9 6l-6 6 6 6M15 6l6 6-6 6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <h3>Web &amp; App Dev</h3>
+          <p>Clean, fast, responsive. React + Next.js on the front, comfortable down the stack. Motion + accessibility + performance — all three, not pick two.</p>
+          <div class="tags"><span class="tag">React</span><span class="tag">Next.js</span><span class="tag">Swift</span><span class="tag">TypeScript</span></div>
+        </article>
+
+        <article class="skill">
+          <div class="tile t-teal">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="5" cy="6" r="1.8" stroke="currentColor" stroke-width="2"/><circle cx="5" cy="18" r="1.8" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="1.8" stroke="currentColor" stroke-width="2"/><circle cx="19" cy="6" r="1.8" stroke="currentColor" stroke-width="2"/><circle cx="19" cy="18" r="1.8" stroke="currentColor" stroke-width="2"/><path d="M6.5 7L10.5 11M6.5 17L10.5 13M13.5 11L17.5 7M13.5 13L17.5 17" stroke="currentColor" stroke-width="1.8"/></svg>
+          </div>
+          <h3>AI Development</h3>
+          <p>LLM-powered tools, agents, RAG pipelines, fine-tuning. Less demo, more shipped product — taste baked into the prompt and the UI.</p>
+          <div class="tags"><span class="tag">Python</span><span class="tag">LangChain</span><span class="tag">Prompt Eng.</span></div>
+        </article>
+
+        <article class="skill">
+          <div class="tile t-yellow">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 3v6M12 15v6M3 12h6M15 12h6M6 6l3.5 3.5M14.5 14.5L18 18M18 6l-3.5 3.5M9.5 14.5L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </div>
+          <h3>Vibecoding</h3>
+          <p>My secret power: collaborating with AI like a creative partner — from "huh, what if…" to a live URL before lunch. Fast prototypes, strong taste.</p>
+          <div class="tags"><span class="tag">Cursor</span><span class="tag">Claude</span><span class="tag">v0</span></div>
+        </article>
+      </div>
+    </div>
+  </div>
+
+  <!-- GALLERY -->
+  <div class="window" data-window="gallery" style="width: 880px; height: 600px; top: 80px; left: 260px;">
+    <div class="titlebar" data-drag>
+      <div class="fav" style="background: linear-gradient(135deg,#86c9f5,#2196f3)">
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 5h18v14H3z"/></svg>
+      </div>
+      <div class="title">Life Gallery — my pictures</div>
+      <div class="controls">
+        <button class="tbtn min">–</button>
+        <button class="tbtn max">☐</button>
+        <button class="tbtn close">✕</button>
+      </div>
+    </div>
+    <div class="toolbar">
+      <span class="addr">
+        <span class="crumb">Computer</span><span class="crumb">monika (C:)</span><span class="crumb">Pictures</span><span class="crumb">Life</span>
+      </span>
+    </div>
+    <div class="window-body">
+      <div class="gallery-toolbar">
+        <span>📁 10 items · sorted by <strong style="color:#1e63a3">vibe</strong></span>
+        <div class="view-toggle">
+          <button class="vt-btn on">Tiles</button>
+          <button class="vt-btn">Details</button>
+        </div>
+      </div>
+
+      <div class="gallery-grid">
+        <div class="photo wide" data-src="images/me.jpg" data-cap="looking out · mauritius">
+          <img src="images/me.jpg" alt="Looking out at the ocean" />
+          <div class="meta"><span class="kind">travel</span><span>me.jpg</span></div>
+        </div>
+        <div class="photo" data-src="images/golf.jpg" data-cap="mid-swing · sunday">
+          <img src="images/golf.jpg" alt="Golf swing" />
+          <div class="meta"><span class="kind">sport</span><span>golf.jpg</span></div>
+        </div>
+        <div class="photo tall" data-src="images/books.jpg" data-cap="sjm era · the entire shelf">
+          <img src="images/books.jpg" alt="Stack of Sarah J. Maas books" />
+          <div class="meta"><span class="kind">reading</span><span>books.jpg</span></div>
+        </div>
+        <div class="photo" data-src="images/madeira.jpg" data-cap="madeira · black sand">
+          <img src="images/madeira.jpg" alt="Black sand beach in Madeira" />
+          <div class="meta"><span class="kind">travel</span><span>madeira.jpg</span></div>
+        </div>
+        <div class="photo" data-src="images/ski.jpg" data-cap="blue sky above · alps">
+          <img src="images/ski.jpg" alt="Ski slopes" />
+          <div class="meta"><span class="kind">snow</span><span>ski.jpg</span></div>
+        </div>
+        <div class="photo" data-src="images/painting.jpg" data-cap="oil on canvas · mine">
+          <img src="images/painting.jpg" alt="My painting" />
+          <div class="meta"><span class="kind">art</span><span>painting.jpg</span></div>
+        </div>
+        <div class="photo" data-src="images/mirror.jpg" data-cap="fitcheck · tuesday">
+          <img src="images/mirror.jpg" alt="Mirror selfie" />
+          <div class="meta"><span class="kind">fits</span><span>mirror.jpg</span></div>
+        </div>
+        <div class="photo" data-src="images/austria.JPG" data-cap="austria">
+          <img src="images/austria.JPG" alt="Austria" />
+          <div class="meta"><span class="kind">austria</span><span>austria.JPG</span></div>
+        </div>
+        <div class="photo" data-src="images/tennis.jpeg" data-cap="tennis">
+          <img src="images/tennis.jpeg" alt="tennis" />
+          <div class="meta"><span class="kind">tennis</span><span>tennis.jpeg</span></div>
+        </div>
+        <div class="photo" data-src="images/ocean.jpg" data-cap="sea air · windblown">
+          <img src="images/ocean.jpg" alt="Ocean cliff" />
+          <div class="meta"><span class="kind">travel</span><span>ocean.jpg</span></div>
+        </div>
+        <div class="photo" data-src="images/peaks.jpg" data-cap="mountain peaks">
+          <img src="images/peaks.jpg" alt="Mountain peaks" />
+          <div class="meta"><span class="kind">peaks</span><span>peaks.jpg</span></div>
+        </div>
+         <div class="photo" data-src="images/waterfall.jpg" data-cap="waterfall">
+          <img src="images/waterfall.jpg" alt="Waterfall" />
+          <div class="meta"><span class="kind">travel</span><span>waterfall.jpg</span></div>
+        </div>
+        <div class="photo" data-src="images/mauri.jpg" data-cap="Mauritius">
+          <img src="images/mauri.jpg" alt="Mauritius" />
+          <div class="meta"><span class="kind">travel</span><span>mauri.jpg</span></div>
+        </div>
+         <div class="photo" data-src="images/snacks.jpeg" data-cap="snacks">
+          <img src="images/snacks.jpeg" alt="Snacks" />
+          <div class="meta"><span class="kind">food</span><span>snacks.jpeg</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- NOW PLAYING -->
+  <div class="window" data-window="playing" style="width: 700px; height: 520px; top: 120px; left: 320px;">
+    <div class="titlebar" data-drag>
+      <div class="fav" style="background: linear-gradient(135deg,#cfa9ee,#8f5ae0)">
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg>
+      </div>
+      <div class="title">Now Playing — what's in my head right now</div>
+      <div class="controls">
+        <button class="tbtn min">–</button>
+        <button class="tbtn max">☐</button>
+        <button class="tbtn close">✕</button>
+      </div>
+    </div>
+    <div class="toolbar">
+      <span class="addr">
+        <span class="crumb">monika (C:)</span><span class="crumb">Users</span><span class="crumb">monika</span><span class="crumb">Current Obsessions</span>
+      </span>
+    </div>
+    <div class="window-body">
+      <h2>My <em>2026 mood board</em>, in file form.</h2>
+      <p class="win-subtitle">Updated weekly · best enjoyed with coffee</p>
+
+      <div class="np-grid">
+        <div class="np-card">
+          <h3><span class="chip" style="background:#e84b3c"></span>On my nightstand</h3>
+          <div class="np-row"><span class="thing">My current read</span><span class="sub">always changing</span></div>
+          <div class="np-row"><span class="thing">Kodak Pixpro FZ55</span><span class="sub">digi cam</span></div>
+          <div class="np-row"><span class="thing">Tinted Vaseline</span><span class="sub">lipcare</span></div>
+        </div>
+
+        <div class="np-card">
+          <h3><span class="chip" style="background:#8cc73e"></span>On repeat on Spotify</h3>
+          <div class="np-row"><span class="thing">Beauty and the Beat</span><span class="sub">Justin Bieber</span></div>
+          <div class="np-row"><span class="thing">Danza Kuduro</span><span class="sub">Don Omar</span></div>
+          <div class="np-row"><span class="thing">Into the Fire</span><span class="sub">Thirteen Senses</span></div>
+        </div>
+
+        <div class="np-card">
+          <h3><span class="chip" style="background:#2196f3"></span>Next trip on the board</h3>
+          <div class="np-row"><span class="thing">Japan</span><span class="sub">spring '26 · dream</span></div>
+          <div class="np-row"><span class="thing">Barcelona</span><span class="sub">long weekend · soon</span></div>
+          <div class="np-row"><span class="thing">Alps, again</span><span class="sub">skis in tow</span></div>
+        </div>
+
+        <div class="np-card">
+          <h3><span class="chip" style="background:#ffc20e"></span>Currently learning</h3>
+          <div class="np-row"><span class="thing">UX/UI design with AI tools</span><span class="sub">this portfolio</span></div>
+          <div class="np-row"><span class="thing">CNN and RNN learning</span><span class="sub">deep learning</span></div>
+          <div class="np-row"><span class="thing">Video editing</span><span class="sub">working on my editing skills</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RESUME -->
+  <div class="window" data-window="resume" style="width: 680px; height: 540px; top: 140px; left: 350px;">
+    <div class="titlebar" data-drag>
+      <div class="fav" style="background: linear-gradient(135deg,#fff,#c8d2e0); color:#0a2d5c">
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M6 3h8l4 4v14H6z"/></svg>
+      </div>
+      <div class="title">Résumé.txt — Notepad</div>
+      <div class="controls">
+        <button class="tbtn min">–</button>
+        <button class="tbtn max">☐</button>
+        <button class="tbtn close">✕</button>
+      </div>
+    </div>
+    <div class="toolbar"><span class="addr"><span class="crumb">Desktop</span><span class="crumb">Résumé.txt</span></span></div>
+    <div class="window-body resume-content">
+      <h2>The <em>short version</em>.</h2>
+      <p class="win-subtitle">(the long version is a conversation — let's have it.)</p>
+
+      <h3>⟶ now</h3>
+      <ul>
+        <li><span class="year">2022 — 2025</span><span class="what">Bachelor's degree in Computer Science</span></li>
+        <li><span class="year">2025 — now</span><span class="what">Master's degree in Computer Science</span></li>
+      </ul>
+
+      <h3>⟶ stack</h3>
+      <ul>
+        <li><span class="year">Design</span><span class="what">Figma · AI tools · Photoshop · Lightroom · Canva</span></li>
+        <li><span class="year">Code</span><span class="what">TypeScript · React · Next.js · Swift · Python · Java</span></li>
+        <li><span class="year">AI</span><span class="what">OpenAI · Claude · Gemini · Grook · custom agents</span></li>
+        <li><span class="year">Film</span><span class="what">Premiere · DaVinci Resolve · directing · producing · VFX</span></li>
+      </ul>
+
+      <h3>⟶ languages</h3>
+      <ul>
+        <li><span class="year">CZ</span><span class="what">native</span></li>
+        <li><span class="year">EN</span><span class="what">fluent · happy to work in English all day</span></li>
+        <li><span class="year">DE</span><span class="what">basics</span></li>
+      </ul>
+
+      <h3>⟶ looking for</h3>
+      <ul>
+        <li><span class="year">Ideal</span><span class="what">Design engineer / creative technologist role at a studio where storytelling matters.<span>Internship or junior full-time · Prague, remote EU, or willing to relocate.</span></span></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- CONTACT -->
+  <div class="window" data-window="contact" style="width: 600px; height: 420px; top: 160px; left: 400px;">
+    <div class="titlebar" data-drag>
+      <div class="fav" style="background: linear-gradient(135deg,#b9e670,#8cc73e)">
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M3 7l9 6 9-6M3 7v10h18V7z"/></svg>
+      </div>
+      <div class="title">Contact — let's talk</div>
+      <div class="controls">
+        <button class="tbtn min">–</button>
+        <button class="tbtn max">☐</button>
+        <button class="tbtn close">✕</button>
+      </div>
+    </div>
+    <div class="toolbar"><span class="addr"><span class="crumb">Computer</span><span class="crumb">Contact</span></span></div>
+    <div class="window-body">
+      <div class="contact-wrap">
+        <h2>Got a brief, a wild idea, or a <em>"is this even possible?"</em></h2>
+        <p>I'm open to internships, freelance design + development, film and content collabs, and anything else at the edge of creative + technical. I read every email.</p>
+        <div class="buttons">
+          <a class="aero-btn primary" href="mailto:monika.ellingerova7@gmail.com">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7l9 6 9-6M3 7v10h18V7z"/></svg>
+            monika.ellingerova7@gmail.com
+          </a>
+          <!--
+          <a class="aero-btn" href="https://instagram.com/" target="_blank" rel="noopener">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1" fill="currentColor"/></svg>
+            Instagram
+          </a>
+        -->
+        </div>
+        <p style="font-size:12px;color:#6a7a94;margin-top:22px">Based in Prague · available worldwide</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- START MENU -->
+  <div class="start-menu" id="startMenu">
+    <div class="start-left">
+      <div class="start-user">
+        <div class="start-avatar"></div>
+        <div class="name">Monika</div>
+        <div style="font-size:11px;color:var(--ink-dim)">Designer · Developer · Filmmaker</div>
+      </div>
+      <button class="start-item" data-open="about"><span class="mi red">👤</span>About Me</button>
+      <button class="start-item" data-open="skills"><span class="mi yellow">⚡</span>Skills.dll</button>
+      <button class="start-item" data-open="gallery"><span class="mi blue">🖼</span>Life Gallery</button>
+      <button class="start-item" data-open="playing"><span class="mi purple">🎧</span>Now Playing</button>
+      <button class="start-item" data-open="resume"><span class="mi gray">📄</span>Résumé.txt</button>
+      <button class="start-item" data-open="contact"><span class="mi green">✉</span>Contact.app</button>
+      <input class="start-search" placeholder="🔍 Search programs and files..." />
+    </div>
+    <div class="start-right">
+      <button class="start-item" onclick="window.open('mailto:monika.ellingerova7@gmail.com','_blank')">✉ Send email</button>
+      <button class="start-item" onclick="window.open('https://instagram.com/','_blank')">📷 Instagram</button>
+      <button class="start-item" onclick="document.querySelectorAll('.window.open').forEach(w=>w.classList.remove('open'))">🗂 Show Desktop</button>
+      <button class="start-shutdown" id="shutdown">Shut down ▾</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- ============================================================
+     TASKBAR
+     ============================================================ -->
+<div class="taskbar" role="toolbar">
+  <button class="start-btn" id="startBtn" aria-label="Start">
+    <span class="orb">
+      <span class="flag">
+        <i class="q1"></i><i class="q2"></i><i class="q3"></i><i class="q4"></i>
+      </span>
+    </span>
+  </button>
+  <div class="task-apps" id="taskApps"></div>
+
+  <div class="tray">
+    <button class="tray-icon" title="Volume">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M4 9v6h4l5 4V5L8 9H4zM16 9.5a3 3 0 010 5M18 7a6 6 0 010 10" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+    </button>
+    <button class="tray-icon" title="Wi-Fi">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 8a17 17 0 0120 0M5 12a13 13 0 0114 0M8 16a8 8 0 018 0"/><circle cx="12" cy="20" r="1.2" fill="currentColor"/></svg>
+    </button>
+    <div class="clock" id="clock">
+      <div id="clock-time">—:—</div>
+      <div id="clock-date">—</div>
+    </div>
+    <button class="show-desktop" id="showDesktop" title="Show desktop"></button>
+  </div>
+</div>
+
+<!-- ============================================================
+     LIGHTBOX
+     ============================================================ -->
+<div class="lightbox" id="lightbox">
+  <div class="lb-inner">
+    <button class="lb-close" id="lbClose">✕</button>
+    <img id="lbImg" src="" alt="" />
+    <div class="lb-cap" id="lbCap"></div>
+  </div>
+</div>
+
+<!-- ============================================================
+     SCRIPTS
+     ============================================================ -->
+<script>
+/* ---------------------------------------
+   Boot sequence
+--------------------------------------- */
+(function () {
+  const boot = document.getElementById('boot');
+  const hide = () => {
+    boot.classList.add('hide');
+    setTimeout(() => boot.remove(), 700);
+    window.removeEventListener('keydown', hide);
+    window.removeEventListener('click', hide);
+  };
+  window.addEventListener('keydown', hide);
+  window.addEventListener('click', hide);
+  setTimeout(hide, 2600);
+})();
+
+/* ---------------------------------------
+   Clock — ticking live
+--------------------------------------- */
+(function () {
+  const t = document.getElementById('clock-time');
+  const d = document.getElementById('clock-date');
+  function pad(n) { return n < 10 ? '0' + n : '' + n; }
+  function tick() {
+    const now = new Date();
+    let h = now.getHours();
+    const ampm = h >= 12 ? 'PM' : 'AM';
+    h = h % 12 || 12;
+    t.textContent = `${h}:${pad(now.getMinutes())} ${ampm}`;
+    d.textContent = `${pad(now.getMonth()+1)}/${pad(now.getDate())}/${now.getFullYear()}`;
+  }
+  tick();
+  setInterval(tick, 1000 * 30);
+})();
+
+/* ---------------------------------------
+   Windows: open / close / focus / drag / maximize / minimize
+--------------------------------------- */
+(function () {
+  let zTop = 30;
+  const apps = document.getElementById('taskApps');
+  const openApps = new Map(); // id -> taskApp button
+
+  function focusWin(w) {
+    document.querySelectorAll('.window').forEach(x => x.classList.remove('focus'));
+    w.classList.add('focus');
+    zTop++;
+    w.style.zIndex = zTop;
+    const id = w.dataset.window;
+    document.querySelectorAll('.task-app').forEach(b => b.classList.remove('active'));
+    const btn = openApps.get(id);
+    if (btn) btn.classList.add('active');
+  }
+
+  function openWin(id) {
+    const w = document.querySelector(`.window[data-window="${id}"]`);
+    if (!w) return;
+    w.classList.remove('closing');
+    w.classList.add('open');
+    focusWin(w);
+
+    // taskbar pill
+    if (!openApps.has(id)) {
+      const title = w.querySelector('.title').textContent.split('—')[0].trim();
+      const fav = w.querySelector('.fav').cloneNode(true);
+      const btn = document.createElement('button');
+      btn.className = 'task-app active';
+      btn.append(fav);
+      const span = document.createElement('span');
+      span.textContent = title;
+      btn.append(span);
+      btn.addEventListener('click', () => {
+        if (w.classList.contains('focus') && w.style.display !== 'none') {
+          w.style.display = 'none';
+          btn.classList.remove('active');
+        } else {
+          w.style.display = 'flex';
+          focusWin(w);
+        }
+      });
+      apps.append(btn);
+      openApps.set(id, btn);
+    }
+  }
+
+  function closeWin(w) {
+    w.classList.add('closing');
+    const id = w.dataset.window;
+    setTimeout(() => {
+      w.classList.remove('open', 'closing', 'max');
+      w.style.display = '';
+      const btn = openApps.get(id);
+      if (btn) btn.remove();
+      openApps.delete(id);
+    }, 220);
+  }
+
+  // Desktop icons -> open
+  document.querySelectorAll('[data-open]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      openWin(btn.dataset.open);
+      closeStartMenu();
+    });
+  });
+
+  // Window controls
+  document.querySelectorAll('.window').forEach(w => {
+    const closeBtn = w.querySelector('.tbtn.close');
+    const maxBtn   = w.querySelector('.tbtn.max');
+    const minBtn   = w.querySelector('.tbtn.min');
+
+    closeBtn.addEventListener('click', () => closeWin(w));
+    maxBtn.addEventListener('click', () => {
+      if (w.classList.contains('max')) {
+        w.classList.remove('max');
+        w.style.top = w.dataset.prevTop;
+        w.style.left = w.dataset.prevLeft;
+        w.style.width = w.dataset.prevW;
+        w.style.height = w.dataset.prevH;
+      } else {
+        w.dataset.prevTop = w.style.top;
+        w.dataset.prevLeft = w.style.left;
+        w.dataset.prevW = w.style.width;
+        w.dataset.prevH = w.style.height;
+        w.classList.add('max');
+        w.style.top = '0';
+        w.style.left = '0';
+        w.style.width = '100vw';
+        w.style.height = 'calc(100vh - 44px)';
+      }
+    });
+    minBtn.addEventListener('click', () => {
+      w.style.display = 'none';
+      const btn = openApps.get(w.dataset.window);
+      if (btn) btn.classList.remove('active');
+    });
+
+    // Click to focus
+    w.addEventListener('mousedown', () => focusWin(w));
+  });
+
+  // Dragging
+  document.querySelectorAll('[data-drag]').forEach(bar => {
+    const win = bar.closest('.window');
+    let startX, startY, winX, winY, dragging = false;
+    bar.addEventListener('mousedown', (e) => {
+      if (e.target.closest('.controls')) return;
+      if (win.classList.contains('max')) return;
+      dragging = true;
+      startX = e.clientX; startY = e.clientY;
+      const rect = win.getBoundingClientRect();
+      winX = rect.left; winY = rect.top;
+      focusWin(win);
+      document.body.style.userSelect = 'none';
+    });
+    window.addEventListener('mousemove', (e) => {
+      if (!dragging) return;
+      const nx = Math.max(0, Math.min(window.innerWidth - 120, winX + (e.clientX - startX)));
+      const ny = Math.max(0, Math.min(window.innerHeight - 80, winY + (e.clientY - startY)));
+      win.style.left = nx + 'px';
+      win.style.top  = ny + 'px';
+    });
+    window.addEventListener('mouseup', () => {
+      dragging = false;
+      document.body.style.userSelect = '';
+    });
+  });
+
+  // Start menu
+  const startBtn = document.getElementById('startBtn');
+  const startMenu = document.getElementById('startMenu');
+  function toggleStart() { startMenu.classList.toggle('open'); startBtn.classList.toggle('active'); }
+  function closeStartMenu() { startMenu.classList.remove('open'); startBtn.classList.remove('active'); }
+  startBtn.addEventListener('click', (e) => { e.stopPropagation(); toggleStart(); });
+  document.addEventListener('click', (e) => {
+    if (!startMenu.contains(e.target) && !startBtn.contains(e.target)) closeStartMenu();
+  });
+  document.getElementById('shutdown').addEventListener('click', () => {
+    if (confirm('Shut down?\n\n(JK — this just closes everything.)')) {
+      document.querySelectorAll('.window.open').forEach(w => closeWin(w));
+      closeStartMenu();
+    }
+  });
+
+  // Show desktop
+  document.getElementById('showDesktop').addEventListener('click', () => {
+    document.querySelectorAll('.window.open').forEach(w => { w.style.display = 'none'; });
+    document.querySelectorAll('.task-app').forEach(b => b.classList.remove('active'));
+  });
+
+  // Auto-open About on first load after boot
+  setTimeout(() => openWin('about'), 2800);
+
+  // Expose for other scripts
+  window.__openWin = openWin;
+})();
+
+/* ---------------------------------------
+   Lightbox for photos
+--------------------------------------- */
+(function () {
+  const lb = document.getElementById('lightbox');
+  const img = document.getElementById('lbImg');
+  const cap = document.getElementById('lbCap');
+  const close = () => lb.classList.remove('open');
+
+  document.querySelectorAll('.photo').forEach(p => {
+    p.addEventListener('click', () => {
+      img.src = p.dataset.src;
+      cap.textContent = p.dataset.cap || '';
+      lb.classList.add('open');
+    });
+  });
+  document.getElementById('lbClose').addEventListener('click', close);
+  lb.addEventListener('click', (e) => { if (e.target === lb || e.target.classList.contains('lb-inner')) close(); });
+  window.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
+})();
+
+/* ---------------------------------------
+   Cursor trail — subtle Aero sparkle
+--------------------------------------- */
+(function () {
+  let last = 0;
+  window.addEventListener('mousemove', (e) => {
+    const now = Date.now();
+    if (now - last < 50) return;
+    last = now;
+    const dot = document.createElement('div');
+    dot.className = 'trail';
+    dot.style.left = e.clientX + 'px';
+    dot.style.top = e.clientY + 'px';
+    document.body.appendChild(dot);
+    setTimeout(() => dot.remove(), 600);
+  });
+})();
+
+/* ---------------------------------------
+   Double-click desktop to refresh vibe
+--------------------------------------- */
+(function () {
+  const wp = document.querySelector('.desktop');
+  wp.addEventListener('dblclick', (e) => {
+    if (e.target.closest('.window') || e.target.closest('.icon') || e.target.closest('.taskbar')) return;
+    const hues = ['#0a2d5c', '#0f2b55', '#12305f', '#0b315f'];
+    document.querySelector('.wallpaper').style.filter = `hue-rotate(${Math.random()*40-20}deg) saturate(${1 + Math.random()*0.3})`;
+    setTimeout(() => document.querySelector('.wallpaper').style.filter = '', 2000);
+  });
+})();
+</script>
+</body>
+</html>
